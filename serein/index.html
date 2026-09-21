@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Serein Stats — Screen Intelligence</title>
+<style>
+  :root{
+    --bg:#0F1117;
+    --surface:#161923;
+    --surface2:#1C202D;
+    --border: rgba(126,158,204,0.14);
+    --border2: rgba(126,158,204,0.24);
+    --accent:#7E9ECC;
+    --accentDim: rgba(126,158,204,0.55);
+    --accentFaint: rgba(126,158,204,0.10);
+    --text:#E7EAF2;
+    --text2: rgba(231,234,242,0.62);
+    --text3: rgba(231,234,242,0.38);
+    --green:#7DAF8F;
+    --red:#C97B7B;
+    --barNormal: rgba(126,158,204,0.35);
+    --barAbove: #C97B7B;
+
+    --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html{ scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *{ box-sizing: inherit; margin:0; padding:0; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img, svg{ max-width:100%; }
+
+  a{ color: inherit; text-decoration: none; }
+
+  .wrap{
+    max-width: 1040px;
+    margin: 0 auto;
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  /* ---------- Nav ---------- */
+  header{
+    position: sticky;
+    top: 0;
+    padding-top: calc(20px + env(safe-area-inset-top, 0px));
+    padding-bottom: 20px;
+    background: linear-gradient(var(--bg) 70%, transparent);
+    z-index: 20;
+  }
+  .nav-row{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .logomark{
+    width:32px; height:32px;
+    border-radius:10px;
+    background: var(--accentFaint);
+    border: 1px solid var(--accentDim);
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--accent);
+  }
+  .wordmark{
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 4px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .nav-links{
+    display:flex;
+    gap: 32px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .nav-links a:hover{ color: var(--text); }
+  .nav-cta{
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: var(--mono);
+    color: var(--bg);
+    background: var(--accent);
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+  @media (max-width: 720px){
+    .nav-links{ display:none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding-top: 64px;
+    padding-bottom: 88px;
+  }
+  .eyebrow-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--text3);
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    margin-bottom: 36px;
+  }
+  .eyebrow-tag .dot{
+    width:6px; height:6px; border-radius:50%;
+    background: var(--accent);
+  }
+  .hero h1{
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(34px, 6vw, 56px);
+    line-height: 1.12;
+    max-width: 780px;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em{
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero p.sub{
+    margin-top: 24px;
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text2);
+    max-width: 460px;
+  }
+  .hero-cta-row{
+    margin-top: 40px;
+    display:flex;
+    align-items:center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .btn-primary{
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: var(--bg);
+    padding: 14px 26px;
+    border-radius: 10px;
+    font-weight: 500;
+    display:inline-block;
+  }
+  .btn-ghost{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text2);
+    border-bottom: 1px solid var(--border2);
+    padding-bottom: 2px;
+  }
+
+  /* ---------- Hero readout panel ---------- */
+  .readout{
+    margin-top: 72px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px;
+    display:grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (max-width: 780px){
+    .readout{ grid-template-columns: 1fr; }
+  }
+  .readout-label{
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+  .readout-sub{
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    opacity: 0.7;
+    margin-bottom: 18px;
+  }
+  .hero-number{
+    font-family: var(--serif);
+    font-weight: 200;
+    font-size: clamp(48px, 8vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .hero-number small{
+    font-size: 0.4em;
+    color: var(--text3);
+    font-weight: 300;
+    margin-left: 6px;
+  }
+  .delta{
+    margin-top: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--green);
+  }
+  .delta.up{ color: var(--red); }
+
+  .bars{
+    display:flex;
+    align-items: flex-end;
+    gap: 10px;
+    height: 110px;
+  }
+  .bar-col{
+    flex:1;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    gap: 8px;
+  }
+  .bar{
+    width: 100%;
+    border-radius: 4px 4px 2px 2px;
+    background: var(--barNormal);
+  }
+  .bar.today{ background: var(--accent); }
+  .bar.above{ background: var(--barAbove); }
+  .bar-day{
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--text3);
+    text-transform: uppercase;
+  }
+
+  /* ---------- Section shell ---------- */
+  section{ padding: 96px 0; }
+  .section-head{
+    margin-bottom: 56px;
+    max-width: 620px;
+  }
+  .section-label{
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 14px;
+  }
+  .section-label span{ color: var(--accent); }
+  .section-head h2{
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(26px, 4vw, 36px);
+    line-height: 1.25;
+  }
+  .section-head p{
+    margin-top: 16px;
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text2);
+  }
+
+  /* ---------- Feature grid ---------- */
+  .feature-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  @media (max-width: 860px){
+    .feature-grid{ grid-template-columns: 1fr; }
+  }
+  .feature-card{
+    background: var(--surface);
+    padding: 32px 28px;
+  }
+  .feature-card .visual{
+    height: 140px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom: 24px;
+  }
+  .feature-card h3{
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .feature-card p{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--text2);
+  }
+
+  /* arc visual */
+  .arc-wrap{ position: relative; width:120px; height:120px; }
+  .arc-center{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--serif); font-size:22px; font-weight:300; color: var(--text);
+  }
+
+  /* heatmap */
+  .heatmap{
+    display:grid;
+    grid-template-columns: repeat(9, 14px);
+    gap: 4px;
+  }
+  .cell{
+    width:14px; height:14px;
+    border-radius: 4px;
+    background: var(--accent);
+  }
+
+  /* ---------- App breakdown list ---------- */
+  .app-list{
+    border-top: 1px solid var(--border);
+  }
+  .app-row{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 20px 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .app-row-left{ display:flex; align-items:center; gap:16px; }
+  .app-icon{
+    width:34px; height:34px;
+    border-radius: 9px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    display:flex; align-items:center; justify-content:center;
+    font-family: var(--mono); font-size:12px; color: var(--accent);
+  }
+  .app-name{ font-family: var(--serif); font-size: 15px; font-weight:400; }
+  .app-cat{ font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); margin-top:3px; }
+  .app-time{ font-family: var(--serif); font-weight:300; font-size: 18px; }
+  .app-bar-track{
+    width: 140px; height: 4px; border-radius: 2px;
+    background: var(--surface2);
+    margin-top: 8px;
+    overflow:hidden;
+  }
+  .app-bar-fill{ height:100%; background: var(--accent); border-radius: 2px; }
+  @media (max-width: 620px){
+    .app-bar-track{ display:none; }
+  }
+
+  /* ---------- Tone / philosophy ---------- */
+  .philosophy{
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .philosophy .wrap{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items:start;
+  }
+  @media (max-width: 780px){
+    .philosophy .wrap{ grid-template-columns: 1fr; gap: 36px; }
+  }
+  .philosophy blockquote{
+    font-family: var(--serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(22px, 3vw, 30px);
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .philosophy blockquote span{ color: var(--accent); }
+  .not-words{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .not-word{
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    text-decoration: line-through;
+    text-decoration-color: var(--red);
+  }
+  .principle-list{ display:flex; flex-direction:column; gap: 22px; }
+  .principle{
+    display:flex; gap: 16px;
+  }
+  .principle-mark{
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    padding-top: 3px;
+    flex-shrink:0;
+    width: 20px;
+  }
+  .principle h4{
+    font-family: var(--serif); font-weight:400; font-size:15px; margin-bottom:4px;
+  }
+  .principle p{
+    font-family: var(--mono); font-size:12.5px; color: var(--text2); line-height:1.6;
+  }
+
+  /* ---------- Screens strip ---------- */
+  .screens-strip{
+    display:flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+  .screens-strip::-webkit-scrollbar{ display:none; }
+  .phone{
+    flex-shrink:0;
+    width: 220px;
+    height: 400px;
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    border-radius: 26px;
+    padding: 22px 16px;
+    position: relative;
+  }
+  .phone .plabel{
+    font-family: var(--mono); font-size:9px; letter-spacing:1px; color: var(--text3); text-transform:uppercase;
+  }
+  .phone .pnum{
+    font-family: var(--serif); font-weight:200; font-size:34px; margin-top:6px;
+  }
+  .phone .parc{ margin-top: 30px; display:flex; justify-content:center; }
+  .phone .prows{ margin-top: 26px; display:flex; flex-direction:column; gap:12px; }
+  .phone .prow{ display:flex; justify-content:space-between; font-family: var(--mono); font-size:10px; color: var(--text2); }
+  .phone .prow .val{ color: var(--text); }
+  .phone .pdot{
+    width:4px; height:4px; border-radius:50%; background: var(--accent);
+    position:absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+  }
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{
+    text-align:center;
+    padding: 120px 0 100px;
+  }
+  .final-cta h2{
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(30px, 5vw, 46px);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.25;
+  }
+  .final-cta h2 em{ font-style: italic; color: var(--accent); }
+  .final-cta p{
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text2);
+    margin-top: 20px;
+  }
+  .final-cta .hero-cta-row{ justify-content:center; margin-top: 36px; }
+
+  footer{
+    border-top: 1px solid var(--border);
+    padding: 40px 0 calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+  footer .wrap{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer .foot-brand{
+    display:flex; align-items:center; gap:10px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 2px; color: var(--text3);
+  }
+  footer .foot-links{
+    display:flex; gap: 24px;
+    font-family: var(--mono); font-size: 11px; color: var(--text3);
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{
+      animation: rise 0.8s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes rise{
+      from{ opacity:0; transform: translateY(14px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <div class="brand">
+      <div class="logomark">S</div>
+      <div class="wordmark">SEREIN</div>
+    </div>
+    <nav class="nav-links">
+      <a href="#how">How it reads</a>
+      <a href="#philosophy">Philosophy</a>
+      <a href="#screens">Screens</a>
+    </nav>
+    <a class="nav-cta" href="#get">Get the app</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow-tag"><span class="dot"></span>SCREEN INTELLIGENCE, NOT SCREEN SHAME</div>
+    <h1 class="reveal">Your phone keeps a record. <em>Serein</em> just reads it back to you straight.</h1>
+    <p class="sub reveal">No streaks. No red alerts shaming you into a scroll-free week. Serein Stats shows what actually happened on your phone — hour by hour, app by app — and lets you decide what it means.</p>
+    <div class="hero-cta-row reveal">
+      <a class="btn-primary" href="#get">Get Serein Stats</a>
+      <a class="btn-ghost" href="#how">See how it reads →</a>
+    </div>
+
+    <div class="readout reveal">
+      <div>
+        <div class="readout-label">Today · Total</div>
+        <div class="readout-sub">Last updated 2 minutes ago</div>
+        <div class="hero-number">3<small>H</small> 42<small>M</small></div>
+        <div class="delta">↓ 12% vs 7-day avg</div>
+      </div>
+      <div>
+        <div class="readout-label" style="margin-bottom:16px;">This week</div>
+        <div class="bars">
+          <div class="bar-col"><div class="bar" style="height:52%"></div><div class="bar-day">M</div></div>
+          <div class="bar-col"><div class="bar" style="height:71%"></div><div class="bar-day">T</div></div>
+          <div class="bar-col"><div class="bar above" style="height:96%"></div><div class="bar-day">W</div></div>
+          <div class="bar-col"><div class="bar" style="height:44%"></div><div class="bar-day">T</div></div>
+          <div class="bar-col"><div class="bar" style="height:63%"></div><div class="bar-day">F</div></div>
+          <div class="bar-col"><div class="bar" style="height:38%"></div><div class="bar-day">S</div></div>
+          <div class="bar-col"><div class="bar today" style="height:58%"></div><div class="bar-day">S</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span>01</span> — HOW SEREIN READS YOUR DAY</div>
+      <h2>Three views of the same truth, none of them trying to sell you a habit.</h2>
+      <p>Every number carries its own context. Nothing sits on the screen unexplained.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="visual">
+          <div class="arc-wrap">
+            <svg viewBox="0 0 120 120" width="120" height="120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="var(--border2)" stroke-width="8" stroke-linecap="round"
+                stroke-dasharray="209 300" stroke-dashoffset="0" transform="rotate(120 60 60)"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="var(--accent)" stroke-width="8" stroke-linecap="round"
+                stroke-dasharray="146 300" stroke-dashoffset="0" transform="rotate(120 60 60)"/>
+            </svg>
+            <div class="arc-center">72%</div>
+          </div>
+        </div>
+        <h3>App limits, as arcs</h3>
+        <p>A single ring per app — how much of today's ceiling you've used. Turns red only when you cross it, never before.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="visual">
+          <div class="heatmap">
+            <div class="cell" style="opacity:.08"></div><div class="cell" style="opacity:.15"></div><div class="cell" style="opacity:.4"></div><div class="cell" style="opacity:.7"></div><div class="cell" style="opacity:.2"></div><div class="cell" style="opacity:.9"></div><div class="cell" style="opacity:.3"></div><div class="cell" style="opacity:.5"></div><div class="cell" style="opacity:.1"></div>
+            <div class="cell" style="opacity:.6"></div><div class="cell" style="opacity:.9"></div><div class="cell" style="opacity:.2"></div><div class="cell" style="opacity:.1"></div><div class="cell" style="opacity:.8"></div><div class="cell" style="opacity:.4"></div><div class="cell" style="opacity:.06"></div><div class="cell" style="opacity:.7"></div><div class="cell" style="opacity:.3"></div>
+            <div class="cell" style="opacity:.9"></div><div class="cell" style="opacity:.5"></div><div class="cell" style="opacity:.08"></div><div class="cell" style="opacity:.3"></div><div class="cell" style="opacity:.6"></div><div class="cell" style="opacity:.15"></div><div class="cell" style="opacity:.4"></div><div class="cell" style="opacity:.94"></div><div class="cell" style="opacity:.2"></div>
+          </div>
+        </div>
+        <h3>Hour-by-hour heat</h3>
+        <p>A grid of your day, darker where your attention actually was. Patterns show up before you have to name them.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="visual">
+          <div class="bars" style="height:110px; width:100%;">
+            <div class="bar-col"><div class="bar" style="height:35%"></div><div class="bar-day">M</div></div>
+            <div class="bar-col"><div class="bar" style="height:55%"></div><div class="bar-day">T</div></div>
+            <div class="bar-col"><div class="bar above" style="height:88%"></div><div class="bar-day">W</div></div>
+            <div class="bar-col"><div class="bar" style="height:40%"></div><div class="bar-day">T</div></div>
+            <div class="bar-col"><div class="bar today" style="height:60%"></div><div class="bar-day">F</div></div>
+          </div>
+        </div>
+        <h3>Weekly bars, plainly labeled</h3>
+        <p>Three colors, three meanings: today, normal, above average. That's the entire legend — nothing to memorize.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span>02</span> — TODAY'S BREAKDOWN</div>
+      <h2>Every app, in order of what it actually cost you.</h2>
+    </div>
+
+    <div class="app-list">
+      <div class="app-row">
+        <div class="app-row-left">
+          <div class="app-icon">M</div>
+          <div>
+            <div class="app-name">Messages</div>
+            <div class="app-cat">Communication</div>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div class="app-time">58m</div>
+          <div class="app-bar-track"><div class="app-bar-fill" style="width:35%"></div></div>
+        </div>
+      </div>
+      <div class="app-row">
+        <div class="app-row-left">
+          <div class="app-icon">I</div>
+          <div>
+            <div class="app-name">Instagram</div>
+            <div class="app-cat">Social</div>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div class="app-time">1h 12m</div>
+          <div class="app-bar-track"><div class="app-bar-fill" style="width:74%; background:var(--barAbove);"></div></div>
+        </div>
+      </div>
+      <div class="app-row">
+        <div class="app-row-left">
+          <div class="app-icon">C</div>
+          <div>
+            <div class="app-name">Chrome</div>
+            <div class="app-cat">Browser</div>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div class="app-time">44m</div>
+          <div class="app-bar-track"><div class="app-bar-fill" style="width:28%"></div></div>
+        </div>
+      </div>
+      <div class="app-row">
+        <div class="app-row-left">
+          <div class="app-icon">S</div>
+          <div>
+            <div class="app-name">Spotify</div>
+            <div class="app-cat">Audio</div>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div class="app-time">28m</div>
+          <div class="app-bar-track"><div class="app-bar-fill" style="width:18%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="philosophy" class="philosophy">
+  <div class="wrap">
+    <div>
+      <blockquote>"Serein shows you reality <span>without judgment</span>, but with specificity. It never uses the word bad. Or good."</blockquote>
+      <div class="not-words">
+        <div class="not-word">bad</div>
+        <div class="not-word">good</div>
+        <div class="not-word">addicted</div>
+        <div class="not-word">detox</div>
+        <div class="not-word">streak broken</div>
+      </div>
+    </div>
+    <div class="principle-list">
+      <div class="principle">
+        <div class="principle-mark">01</div>
+        <div><h4>No gamification</h4><p>No streaks to protect, no points to lose. A number is just a number.</p></div>
+      </div>
+      <div class="principle">
+        <div class="principle-mark">02</div>
+        <div><h4>Context, always</h4><p>Every metric sits next to its comparison — vs yesterday, vs your 7-day average.</p></div>
+      </div>
+      <div class="principle">
+        <div class="principle-mark">03</div>
+        <div><h4>Color means one thing</h4><p>Red is above average. Green is below. That mapping never changes, screen to screen.</p></div>
+      </div>
+      <div class="principle">
+        <div class="principle-mark">04</div>
+        <div><h4>You decide what it means</h4><p>Serein reports. It doesn't diagnose, warn, or congratulate.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="section-label"><span>03</span> — INSIDE THE APP</div>
+      <h2>Four screens, one honest layout.</h2>
+    </div>
+    <div class="screens-strip">
+      <div class="phone">
+        <div class="plabel">Today</div>
+        <div class="pnum">3h 42m</div>
+        <div class="delta" style="margin-top:6px;">↓ 12% vs avg</div>
+        <div class="prows">
+          <div class="prow"><span>Instagram</span><span class="val">1h 12m</span></div>
+          <div class="prow"><span>Messages</span><span class="val">58m</span></div>
+          <div class="prow"><span>Chrome</span><span class="val">44m</span></div>
+        </div>
+        <div class="pdot"></div>
+      </div>
+      <div class="phone">
+        <div class="plabel">App detail</div>
+        <div class="pnum" style="font-size:26px;">Instagram</div>
+        <div class="parc">
+          <svg viewBox="0 0 90 90" width="90" height="90">
+            <circle cx="45" cy="45" r="36" fill="none" stroke="var(--border2)" stroke-width="7" stroke-linecap="round" stroke-dasharray="150 220" transform="rotate(120 45 45)"/>
+            <circle cx="45" cy="45" r="36" fill="none" stroke="var(--barAbove)" stroke-width="7" stroke-linecap="round" stroke-dasharray="128 220" transform="rotate(120 45 45)"/>
+          </svg>
+        </div>
+        <div class="prows">
+          <div class="prow"><span>Daily limit</span><span class="val">1h 30m</span></div>
+          <div class="prow"><span>Opens today</span><span class="val">14</span></div>
+        </div>
+        <div class="pdot"></div>
+      </div>
+      <div class="phone">
+        <div class="plabel">Week</div>
+        <div class="pnum" style="font-size:26px;">18h 06m</div>
+        <div style="margin-top:24px;">
+          <div class="bars" style="height:70px;">
+            <div class="bar-col"><div class="bar" style="height:40%"></div></div>
+            <div class="bar-col"><div class="bar" style="height:60%"></div></div>
+            <div class="bar-col"><div class="bar above" style="height:95%"></div></div>
+            <div class="bar-col"><div class="bar" style="height:35%"></div></div>
+            <div class="bar-col"><div class="bar" style="height:55%"></div></div>
+            <div class="bar-col"><div class="bar" style="height:30%"></div></div>
+            <div class="bar-col"><div class="bar today" style="height:50%"></div></div>
+          </div>
+        </div>
+        <div class="pdot"></div>
+      </div>
+      <div class="phone">
+        <div class="plabel">Unlocks</div>
+        <div class="pnum">142</div>
+        <div class="delta" style="margin-top:6px; color:var(--text3);">Every screen-on counted</div>
+        <div class="prows">
+          <div class="prow"><span>Longest gap</span><span class="val">2h 14m</span></div>
+          <div class="prow"><span>First unlock</span><span class="val">7:04 AM</span></div>
+          <div class="prow"><span>Last unlock</span><span class="val">11:52 PM</span></div>
+        </div>
+        <div class="pdot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="get" class="final-cta">
+  <div class="wrap">
+    <h2>Not another dashboard telling you to <em>do better.</em></h2>
+    <p>Just an honest record of where your day went.</p>
+    <div class="hero-cta-row">
+      <a class="btn-primary" href="#">Get Serein Stats</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-brand"><div class="logomark" style="width:24px;height:24px;font-size:12px;">S</div>SEREIN — SCREEN INTELLIGENCE</div>
+    <div class="foot-links">
+      <a href="#how">How it reads</a>
+      <a href="#philosophy">Philosophy</a>
+      <a href="#screens">Screens</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
