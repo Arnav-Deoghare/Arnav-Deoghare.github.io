@@ -3,564 +3,616 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Serein Stats — Screen Intelligence</title>
+<title>Serein — Screen Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0F1117;
-    --surface:#161923;
-    --surface2:#1C202D;
-    --border: rgba(126,158,204,0.14);
-    --border2: rgba(126,158,204,0.24);
-    --accent:#7E9ECC;
-    --accentDim: rgba(126,158,204,0.55);
-    --accentFaint: rgba(126,158,204,0.10);
-    --text:#E7EAF2;
-    --text2: rgba(231,234,242,0.62);
-    --text3: rgba(231,234,242,0.38);
-    --green:#7DAF8F;
-    --red:#C97B7B;
-    --barNormal: rgba(126,158,204,0.35);
-    --barAbove: #C97B7B;
+/* ── TOKENS (exact match to app) ─────────────────────────── */
+:root {
+  --bg:           #0F1117;
+  --surface:      #161B24;
+  --surface2:     #1E2536;
+  --border:       #242D3E;
+  --border2:      #2E3A50;
+  --accent:       #7E9ECC;
+  --accent-dim:   #4E6E9C;
+  --accent-faint: #1A2540;
+  --text:         #E8ECF4;
+  --text2:        #8090A8;
+  --text3:        #485868;
+  --green:        #6A9E82;
+  --red:          #B07878;
+  --bar-normal:   rgba(126,158,204,0.22);
+  --bar-above:    rgba(176,120,120,0.55);
 
-    --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-    --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+*, *::before, *::after { box-sizing: inherit; margin: 0; padding: 0; }
 
-    box-sizing: border-box;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
-  html{ scroll-padding-top: env(safe-area-inset-top, 0px); }
-  *{ box-sizing: inherit; margin:0; padding:0; }
-  body{
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--serif);
-    font-weight: 300;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-  img, svg{ max-width:100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
 
-  a{ color: inherit; text-decoration: none; }
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
 
-  .wrap{
-    max-width: 1040px;
-    margin: 0 auto;
-    padding-left: 28px;
-    padding-right: 28px;
-  }
+/* ── HEADER ────────────────────────────────────────────────── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: calc(18px + env(safe-area-inset-top, 0px)) 0 18px;
+  background: linear-gradient(var(--bg) 75%, transparent);
+}
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logomark {
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  background: var(--accent-faint);
+  border: 1px solid rgba(190,158,114,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+}
+.wordmark {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.nav-links {
+  display: flex;
+  gap: 28px;
+  font-size: 12px;
+  color: var(--text3);
+  letter-spacing: 0.3px;
+}
+.nav-links a:hover { color: var(--text2); }
+.nav-cta {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  background: var(--accent-faint);
+  border: 1px solid rgba(190,158,114,0.4);
+  color: var(--accent);
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+.nav-cta:hover { background: rgba(190,158,114,0.18); }
+@media (max-width: 680px) { .nav-links { display: none; } }
 
-  /* ---------- Nav ---------- */
-  header{
-    position: sticky;
-    top: 0;
-    padding-top: calc(20px + env(safe-area-inset-top, 0px));
-    padding-bottom: 20px;
-    background: linear-gradient(var(--bg) 70%, transparent);
-    z-index: 20;
-  }
-  .nav-row{
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-  }
-  .brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
-  .logomark{
-    width:32px; height:32px;
-    border-radius:10px;
-    background: var(--accentFaint);
-    border: 1px solid var(--accentDim);
-    display:flex; align-items:center; justify-content:center;
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: 16px;
-    color: var(--accent);
-  }
-  .wordmark{
-    font-family: var(--mono);
-    font-size: 13px;
-    letter-spacing: 4px;
-    font-weight: 500;
-    color: var(--accent);
-  }
-  .nav-links{
-    display:flex;
-    gap: 32px;
-    font-size: 13px;
-    color: var(--text2);
-  }
-  .nav-links a:hover{ color: var(--text); }
-  .nav-cta{
-    font-size: 12px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    font-family: var(--mono);
-    color: var(--bg);
-    background: var(--accent);
-    padding: 9px 18px;
-    border-radius: 8px;
-    font-weight: 500;
-  }
-  @media (max-width: 720px){
-    .nav-links{ display:none; }
-  }
+/* ── SECTION LABEL ─────────────────────────────────────────── */
+.sect-label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+.sect-sub {
+  font-size: 9px;
+  color: var(--text3);
+  opacity: 0.7;
+}
 
-  /* ---------- Hero ---------- */
-  .hero{
-    padding-top: 64px;
-    padding-bottom: 88px;
-  }
-  .eyebrow-tag{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    color: var(--text3);
-    text-transform: uppercase;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 6px 14px;
-    margin-bottom: 36px;
-  }
-  .eyebrow-tag .dot{
-    width:6px; height:6px; border-radius:50%;
-    background: var(--accent);
-  }
-  .hero h1{
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(34px, 6vw, 56px);
-    line-height: 1.12;
-    max-width: 780px;
-    letter-spacing: -0.01em;
-  }
-  .hero h1 em{
-    font-style: italic;
-    color: var(--accent);
-  }
-  .hero p.sub{
-    margin-top: 24px;
-    font-family: var(--mono);
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--text2);
-    max-width: 460px;
-  }
-  .hero-cta-row{
-    margin-top: 40px;
-    display:flex;
-    align-items:center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .btn-primary{
-    font-family: var(--mono);
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    background: var(--accent);
-    color: var(--bg);
-    padding: 14px 26px;
-    border-radius: 10px;
-    font-weight: 500;
-    display:inline-block;
-  }
-  .btn-ghost{
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text2);
-    border-bottom: 1px solid var(--border2);
-    padding-bottom: 2px;
-  }
+/* ── DIVIDER ───────────────────────────────────────────────── */
+.hline {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
 
-  /* ---------- Hero readout panel ---------- */
-  .readout{
-    margin-top: 72px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 36px;
-    display:grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: 40px;
-    align-items: center;
-  }
-  @media (max-width: 780px){
-    .readout{ grid-template-columns: 1fr; }
-  }
-  .readout-label{
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin-bottom: 4px;
-  }
-  .readout-sub{
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--text3);
-    opacity: 0.7;
-    margin-bottom: 18px;
-  }
-  .hero-number{
-    font-family: var(--serif);
-    font-weight: 200;
-    font-size: clamp(48px, 8vw, 64px);
-    line-height: 1;
-    letter-spacing: -0.01em;
-  }
-  .hero-number small{
-    font-size: 0.4em;
-    color: var(--text3);
-    font-weight: 300;
-    margin-left: 6px;
-  }
-  .delta{
-    margin-top: 12px;
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--green);
-  }
-  .delta.up{ color: var(--red); }
+/* ── HERO ──────────────────────────────────────────────────── */
+.hero {
+  padding: 72px 0 96px;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  margin-bottom: 32px;
+}
+.eyebrow .dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.hero h1 {
+  font-weight: 300;
+  font-size: clamp(30px, 5vw, 52px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  max-width: 740px;
+  color: var(--text);
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+.hero-sub {
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text2);
+  max-width: 440px;
+}
+.cta-row {
+  margin-top: 36px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 13px 24px;
+  border-radius: 10px;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-primary svg { flex-shrink: 0; }
+.btn-ghost {
+  font-size: 13px;
+  color: var(--text2);
+  border-bottom: 1px solid var(--border2);
+  padding-bottom: 2px;
+}
+.btn-ghost:hover { color: var(--text); }
 
-  .bars{
-    display:flex;
-    align-items: flex-end;
-    gap: 10px;
-    height: 110px;
-  }
-  .bar-col{
-    flex:1;
-    display:flex;
-    flex-direction: column;
-    align-items:center;
-    gap: 8px;
-  }
-  .bar{
-    width: 100%;
-    border-radius: 4px 4px 2px 2px;
-    background: var(--barNormal);
-  }
-  .bar.today{ background: var(--accent); }
-  .bar.above{ background: var(--barAbove); }
-  .bar-day{
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 1px;
-    color: var(--text3);
-    text-transform: uppercase;
-  }
+/* ── HERO READOUT CARD ─────────────────────────────────────── */
+.readout {
+  margin-top: 64px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 740px) { .readout { grid-template-columns: 1fr; } }
+.readout-number {
+  font-weight: 200;
+  font-size: clamp(44px, 7vw, 60px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text);
+}
+.delta-positive { font-size: 12px; font-weight: 500; color: var(--green); margin-top: 8px; }
+.delta-negative { font-size: 12px; font-weight: 500; color: var(--red);   margin-top: 8px; }
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 96px;
+}
+.bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.bar {
+  width: 100%;
+  border-radius: 3px 3px 2px 2px;
+  background: var(--bar-normal);
+}
+.bar.today  { background: var(--accent); }
+.bar.above  { background: var(--bar-above); }
+.bar-day {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.bar-day.today-lbl { color: var(--accent); }
 
-  /* ---------- Section shell ---------- */
-  section{ padding: 96px 0; }
-  .section-head{
-    margin-bottom: 56px;
-    max-width: 620px;
-  }
-  .section-label{
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin-bottom: 14px;
-  }
-  .section-label span{ color: var(--accent); }
-  .section-head h2{
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(26px, 4vw, 36px);
-    line-height: 1.25;
-  }
-  .section-head p{
-    margin-top: 16px;
-    font-family: var(--mono);
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--text2);
-  }
+/* ── HOW SECTION ───────────────────────────────────────────── */
+section { padding: 88px 0; }
+.section-head { margin-bottom: 48px; max-width: 580px; }
+.section-head h2 {
+  font-weight: 300;
+  font-size: clamp(24px, 3.5vw, 34px);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-top: 10px;
+}
+.section-head p {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text2);
+}
 
-  /* ---------- Feature grid ---------- */
-  .feature-grid{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-  }
-  @media (max-width: 860px){
-    .feature-grid{ grid-template-columns: 1fr; }
-  }
-  .feature-card{
-    background: var(--surface);
-    padding: 32px 28px;
-  }
-  .feature-card .visual{
-    height: 140px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-bottom: 24px;
-  }
-  .feature-card h3{
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  .feature-card p{
-    font-family: var(--mono);
-    font-size: 12.5px;
-    line-height: 1.7;
-    color: var(--text2);
-  }
+/* ── FEATURE GRID ──────────────────────────────────────────── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+@media (max-width: 820px) { .feature-grid { grid-template-columns: 1fr; } }
+.feat-card {
+  background: var(--surface);
+  padding: 28px 24px;
+}
+.feat-visual {
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.feat-card h3 {
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.feat-card p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text2);
+}
 
-  /* arc visual */
-  .arc-wrap{ position: relative; width:120px; height:120px; }
-  .arc-center{
-    position:absolute; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    font-family: var(--serif); font-size:22px; font-weight:300; color: var(--text);
-  }
+/* arc */
+.arc-wrap { position: relative; width: 110px; height: 110px; }
+.arc-center {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 300; font-size: 20px; color: var(--text);
+}
 
-  /* heatmap */
-  .heatmap{
-    display:grid;
-    grid-template-columns: repeat(9, 14px);
-    gap: 4px;
-  }
-  .cell{
-    width:14px; height:14px;
-    border-radius: 4px;
-    background: var(--accent);
-  }
+/* heatmap */
+.heatmap-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 13px);
+  gap: 4px;
+}
+.hcell {
+  width: 13px; height: 13px;
+  border-radius: 4px;
+  background: var(--accent);
+}
 
-  /* ---------- App breakdown list ---------- */
-  .app-list{
-    border-top: 1px solid var(--border);
-  }
-  .app-row{
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    padding: 20px 4px;
-    border-bottom: 1px solid var(--border);
-  }
-  .app-row-left{ display:flex; align-items:center; gap:16px; }
-  .app-icon{
-    width:34px; height:34px;
-    border-radius: 9px;
-    background: var(--surface2);
-    border: 1px solid var(--border2);
-    display:flex; align-items:center; justify-content:center;
-    font-family: var(--mono); font-size:12px; color: var(--accent);
-  }
-  .app-name{ font-family: var(--serif); font-size: 15px; font-weight:400; }
-  .app-cat{ font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); margin-top:3px; }
-  .app-time{ font-family: var(--serif); font-weight:300; font-size: 18px; }
-  .app-bar-track{
-    width: 140px; height: 4px; border-radius: 2px;
-    background: var(--surface2);
-    margin-top: 8px;
-    overflow:hidden;
-  }
-  .app-bar-fill{ height:100%; background: var(--accent); border-radius: 2px; }
-  @media (max-width: 620px){
-    .app-bar-track{ display:none; }
-  }
+/* ── APP BREAKDOWN ─────────────────────────────────────────── */
+.app-list { border-top: 1px solid var(--border); }
+.app-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--border);
+}
+.app-left { display: flex; align-items: center; gap: 14px; }
+.app-ring-wrap { position: relative; width: 36px; height: 36px; flex-shrink: 0; }
+.app-ring-wrap span {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 400; color: var(--text2);
+}
+.app-name { font-size: 14px; font-weight: 300; color: var(--text); }
+.app-cat {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-top: 2px;
+}
+.app-time { font-size: 16px; font-weight: 300; color: var(--accent); }
+.app-sub { font-size: 9px; color: var(--text3); text-align: right; margin-top: 2px; }
 
-  /* ---------- Tone / philosophy ---------- */
-  .philosophy{
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-  .philosophy .wrap{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items:start;
-  }
-  @media (max-width: 780px){
-    .philosophy .wrap{ grid-template-columns: 1fr; gap: 36px; }
-  }
-  .philosophy blockquote{
-    font-family: var(--serif);
-    font-weight: 300;
-    font-style: italic;
-    font-size: clamp(22px, 3vw, 30px);
-    line-height: 1.5;
-    color: var(--text);
-  }
-  .philosophy blockquote span{ color: var(--accent); }
-  .not-words{
-    display:flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 22px;
-  }
-  .not-word{
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text3);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 6px 12px;
-    text-decoration: line-through;
-    text-decoration-color: var(--red);
-  }
-  .principle-list{ display:flex; flex-direction:column; gap: 22px; }
-  .principle{
-    display:flex; gap: 16px;
-  }
-  .principle-mark{
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent);
-    padding-top: 3px;
-    flex-shrink:0;
-    width: 20px;
-  }
-  .principle h4{
-    font-family: var(--serif); font-weight:400; font-size:15px; margin-bottom:4px;
-  }
-  .principle p{
-    font-family: var(--mono); font-size:12.5px; color: var(--text2); line-height:1.6;
-  }
+/* ── PHILOSOPHY ────────────────────────────────────────────── */
+.philosophy {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.phil-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+@media (max-width: 740px) { .phil-grid { grid-template-columns: 1fr; gap: 32px; } }
+.phil-quote {
+  font-weight: 300;
+  font-size: clamp(20px, 2.8vw, 28px);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+.phil-quote em { font-style: normal; color: var(--accent); }
+.struck-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+.struck {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: var(--text3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 11px;
+  text-decoration: line-through;
+  text-decoration-color: var(--red);
+}
+.principles { display: flex; flex-direction: column; gap: 20px; }
+.principle { display: flex; gap: 14px; }
+.p-num {
+  font-size: 9px; font-weight: 600; letter-spacing: 1px;
+  color: var(--accent); padding-top: 3px; flex-shrink: 0; width: 18px;
+}
+.principle h4 { font-size: 13px; font-weight: 500; margin-bottom: 3px; color: var(--text); }
+.principle p  { font-size: 12px; color: var(--text2); line-height: 1.6; }
 
-  /* ---------- Screens strip ---------- */
-  .screens-strip{
-    display:flex;
-    gap: 24px;
-    overflow-x: auto;
-    padding-bottom: 8px;
-    scrollbar-width: none;
-  }
-  .screens-strip::-webkit-scrollbar{ display:none; }
-  .phone{
-    flex-shrink:0;
-    width: 220px;
-    height: 400px;
-    background: var(--bg);
-    border: 1px solid var(--border2);
-    border-radius: 26px;
-    padding: 22px 16px;
-    position: relative;
-  }
-  .phone .plabel{
-    font-family: var(--mono); font-size:9px; letter-spacing:1px; color: var(--text3); text-transform:uppercase;
-  }
-  .phone .pnum{
-    font-family: var(--serif); font-weight:200; font-size:34px; margin-top:6px;
-  }
-  .phone .parc{ margin-top: 30px; display:flex; justify-content:center; }
-  .phone .prows{ margin-top: 26px; display:flex; flex-direction:column; gap:12px; }
-  .phone .prow{ display:flex; justify-content:space-between; font-family: var(--mono); font-size:10px; color: var(--text2); }
-  .phone .prow .val{ color: var(--text); }
-  .phone .pdot{
-    width:4px; height:4px; border-radius:50%; background: var(--accent);
-    position:absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-  }
+/* ── SCREENS STRIP ─────────────────────────────────────────── */
+.screens-strip {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.screens-strip::-webkit-scrollbar { display: none; }
+.phone {
+  flex-shrink: 0;
+  width: 210px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 22px 18px 22px;
+  position: relative;
+}
+.phone-label { font-size: 8px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text3); }
+.phone-num {
+  font-weight: 200;
+  font-size: 32px;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-top: 6px;
+  color: var(--text);
+}
+.phone-delta-g { font-size: 11px; color: var(--green); margin-top: 4px; }
+.phone-delta-r { font-size: 11px; color: var(--red);   margin-top: 4px; }
+.phone-rows { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+.phone-row {
+  display: flex; justify-content: space-between;
+  font-size: 10px; color: var(--text2);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+}
+.phone-row .val { color: var(--text); font-weight: 400; }
+.phone-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent);
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+}
+.phone-arc { margin-top: 24px; display: flex; justify-content: center; }
 
-  /* ---------- Final CTA ---------- */
-  .final-cta{
-    text-align:center;
-    padding: 120px 0 100px;
-  }
-  .final-cta h2{
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: clamp(30px, 5vw, 46px);
-    max-width: 640px;
-    margin: 0 auto;
-    line-height: 1.25;
-  }
-  .final-cta h2 em{ font-style: italic; color: var(--accent); }
-  .final-cta p{
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--text2);
-    margin-top: 20px;
-  }
-  .final-cta .hero-cta-row{ justify-content:center; margin-top: 36px; }
+/* ── DOWNLOAD SECTION ──────────────────────────────────────── */
+.download-section {
+  text-align: center;
+  padding: 112px 0 96px;
+}
+.download-section h2 {
+  font-weight: 300;
+  font-size: clamp(28px, 4.5vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.download-section h2 em { font-style: normal; color: var(--accent); }
+.download-section .hero-sub {
+  margin: 18px auto 0;
+  max-width: 420px;
+}
 
-  footer{
-    border-top: 1px solid var(--border);
-    padding: 40px 0 calc(40px + env(safe-area-inset-bottom, 0px));
-  }
-  footer .wrap{
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-  footer .foot-brand{
-    display:flex; align-items:center; gap:10px;
-    font-family: var(--mono); font-size: 11px; letter-spacing: 2px; color: var(--text3);
-  }
-  footer .foot-links{
-    display:flex; gap: 24px;
-    font-family: var(--mono); font-size: 11px; color: var(--text3);
-  }
+/* Download card */
+.dl-card {
+  margin: 44px auto 0;
+  max-width: 480px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 28px 24px;
+  text-align: left;
+}
+.dl-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.dl-app-identity { display: flex; align-items: center; gap: 12px; }
+.dl-logomark {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--accent-faint);
+  border: 1px solid rgba(190,158,114,0.35);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 400; color: var(--accent);
+}
+.dl-app-name { font-size: 16px; font-weight: 400; color: var(--text); }
+.dl-app-sub  { font-size: 11px; color: var(--text3); margin-top: 2px; }
+.version-chip {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--accent-dim);
+  background: var(--accent-faint);
+  border: 1px solid rgba(190,158,114,0.25);
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+.hline-card { height: 1px; background: var(--border); margin-bottom: 20px; }
+.dl-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-bottom: 22px;
+}
+.dl-meta-item { text-align: center; }
+.dl-meta-item + .dl-meta-item {
+  border-left: 1px solid var(--border);
+}
+.dl-meta-val  { font-size: 14px; font-weight: 400; color: var(--text); }
+.dl-meta-lbl  { font-size: 9px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); margin-top: 2px; }
+.dl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: var(--bg);
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.dl-btn:hover { opacity: 0.9; }
+.dl-note {
+  margin-top: 12px;
+  font-size: 10px;
+  color: var(--text3);
+  text-align: center;
+  line-height: 1.6;
+}
+.dl-note a { color: var(--accent-dim); border-bottom: 1px solid var(--border2); }
 
-  @media (prefers-reduced-motion: no-preference){
-    .reveal{
-      animation: rise 0.8s cubic-bezier(0.16,1,0.3,1) both;
-    }
-    @keyframes rise{
-      from{ opacity:0; transform: translateY(14px); }
-      to{ opacity:1; transform: translateY(0); }
-    }
+/* ── FOOTER ────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 36px 0 calc(36px + env(safe-area-inset-bottom, 0px));
+}
+footer .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.foot-brand {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 10px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text3);
+}
+.foot-links {
+  display: flex; gap: 22px;
+  font-size: 11px; color: var(--text3);
+}
+.foot-links a:hover { color: var(--text2); }
+
+/* ── ANIMATIONS ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    animation: rise 0.8s cubic-bezier(0.16,1,0.3,1) both;
   }
+  @keyframes rise {
+    from { opacity:0; transform: translateY(12px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+}
 </style>
 </head>
 <body>
 
+<!-- ── HEADER ─────────────────────────────────────────────── -->
 <header>
   <div class="wrap nav-row">
     <div class="brand">
       <div class="logomark">S</div>
-      <div class="wordmark">SEREIN</div>
+      <span class="wordmark">Serein</span>
     </div>
     <nav class="nav-links">
       <a href="#how">How it reads</a>
       <a href="#philosophy">Philosophy</a>
       <a href="#screens">Screens</a>
     </nav>
-    <a class="nav-cta" href="#get">Get the app</a>
+    <a class="nav-cta" href="#download" id="nav-cta">Download</a>
   </div>
 </header>
 
+<!-- ── HERO ───────────────────────────────────────────────── -->
 <section class="hero">
   <div class="wrap">
-    <div class="eyebrow-tag"><span class="dot"></span>SCREEN INTELLIGENCE, NOT SCREEN SHAME</div>
-    <h1 class="reveal">Your phone keeps a record. <em>Serein</em> just reads it back to you straight.</h1>
-    <p class="sub reveal">No streaks. No red alerts shaming you into a scroll-free week. Serein Stats shows what actually happened on your phone — hour by hour, app by app — and lets you decide what it means.</p>
-    <div class="hero-cta-row reveal">
-      <a class="btn-primary" href="#get">Get Serein Stats</a>
+    <div class="eyebrow"><span class="dot"></span>Screen Intelligence · Android</div>
+    <h1 class="reveal">Your phone keeps a record.<br><em>Serein</em> reads it back to you straight.</h1>
+    <p class="hero-sub reveal">No streaks. No shame alerts. Just an honest account of where your day went — hour by hour, app by app.</p>
+    <div class="cta-row reveal">
+      <a class="btn-primary" href="#download">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M7 1v8M3.5 5.5 7 9l3.5-3.5M2 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Download APK
+      </a>
       <a class="btn-ghost" href="#how">See how it reads →</a>
     </div>
 
+    <!-- Readout panel -->
     <div class="readout reveal">
       <div>
-        <div class="readout-label">Today · Total</div>
-        <div class="readout-sub">Last updated 2 minutes ago</div>
-        <div class="hero-number">3<small>H</small> 42<small>M</small></div>
-        <div class="delta">↓ 12% vs 7-day avg</div>
+        <div class="sect-label">Today · Total screen time</div>
+        <div class="sect-sub">Compared to your 7-day average</div>
+        <div style="margin-top:14px;" class="readout-number">3h 42m</div>
+        <div class="delta-positive">↓ 12m vs 7-day avg</div>
       </div>
       <div>
-        <div class="readout-label" style="margin-bottom:16px;">This week</div>
+        <div class="sect-label" style="margin-bottom:14px;">Past 7 days</div>
         <div class="bars">
           <div class="bar-col"><div class="bar" style="height:52%"></div><div class="bar-day">M</div></div>
           <div class="bar-col"><div class="bar" style="height:71%"></div><div class="bar-day">T</div></div>
@@ -568,248 +620,457 @@
           <div class="bar-col"><div class="bar" style="height:44%"></div><div class="bar-day">T</div></div>
           <div class="bar-col"><div class="bar" style="height:63%"></div><div class="bar-day">F</div></div>
           <div class="bar-col"><div class="bar" style="height:38%"></div><div class="bar-day">S</div></div>
-          <div class="bar-col"><div class="bar today" style="height:58%"></div><div class="bar-day">S</div></div>
+          <div class="bar-col"><div class="bar today" style="height:58%"></div><div class="bar-day today-lbl">S</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ── HOW IT READS ────────────────────────────────────────── -->
 <section id="how">
   <div class="wrap">
     <div class="section-head">
-      <div class="section-label"><span>01</span> — HOW SEREIN READS YOUR DAY</div>
-      <h2>Three views of the same truth, none of them trying to sell you a habit.</h2>
-      <p>Every number carries its own context. Nothing sits on the screen unexplained.</p>
+      <div class="sect-label">01 — How Serein reads your day</div>
+      <h2>Three views of the same truth, none of them trying to change you.</h2>
+      <p>Every number carries its own context. Nothing sits on screen unexplained.</p>
     </div>
 
     <div class="feature-grid">
-      <div class="feature-card">
-        <div class="visual">
+      <!-- Arc rings -->
+      <div class="feat-card">
+        <div class="feat-visual">
           <div class="arc-wrap">
-            <svg viewBox="0 0 120 120" width="120" height="120">
-              <circle cx="60" cy="60" r="50" fill="none" stroke="var(--border2)" stroke-width="8" stroke-linecap="round"
-                stroke-dasharray="209 300" stroke-dashoffset="0" transform="rotate(120 60 60)"/>
-              <circle cx="60" cy="60" r="50" fill="none" stroke="var(--accent)" stroke-width="8" stroke-linecap="round"
-                stroke-dasharray="146 300" stroke-dashoffset="0" transform="rotate(120 60 60)"/>
+            <svg viewBox="0 0 110 110" width="110" height="110">
+              <circle cx="55" cy="55" r="44"
+                fill="none" stroke="var(--border2)" stroke-width="7" stroke-linecap="round"
+                stroke-dasharray="185 275" stroke-dashoffset="0"
+                transform="rotate(120 55 55)"/>
+              <circle cx="55" cy="55" r="44"
+                fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round"
+                stroke-dasharray="130 275" stroke-dashoffset="0"
+                transform="rotate(120 55 55)"/>
             </svg>
             <div class="arc-center">72%</div>
           </div>
         </div>
-        <h3>App limits, as arcs</h3>
-        <p>A single ring per app — how much of today's ceiling you've used. Turns red only when you cross it, never before.</p>
+        <h3>Circular arcs per app</h3>
+        <p>One ring shows how much of today's average you've used. Fills accent-colored, shifts red only when you cross it. No bar charts, no numbers stacked in columns.</p>
       </div>
 
-      <div class="feature-card">
-        <div class="visual">
-          <div class="heatmap">
-            <div class="cell" style="opacity:.08"></div><div class="cell" style="opacity:.15"></div><div class="cell" style="opacity:.4"></div><div class="cell" style="opacity:.7"></div><div class="cell" style="opacity:.2"></div><div class="cell" style="opacity:.9"></div><div class="cell" style="opacity:.3"></div><div class="cell" style="opacity:.5"></div><div class="cell" style="opacity:.1"></div>
-            <div class="cell" style="opacity:.6"></div><div class="cell" style="opacity:.9"></div><div class="cell" style="opacity:.2"></div><div class="cell" style="opacity:.1"></div><div class="cell" style="opacity:.8"></div><div class="cell" style="opacity:.4"></div><div class="cell" style="opacity:.06"></div><div class="cell" style="opacity:.7"></div><div class="cell" style="opacity:.3"></div>
-            <div class="cell" style="opacity:.9"></div><div class="cell" style="opacity:.5"></div><div class="cell" style="opacity:.08"></div><div class="cell" style="opacity:.3"></div><div class="cell" style="opacity:.6"></div><div class="cell" style="opacity:.15"></div><div class="cell" style="opacity:.4"></div><div class="cell" style="opacity:.94"></div><div class="cell" style="opacity:.2"></div>
+      <!-- Heatmap -->
+      <div class="feat-card">
+        <div class="feat-visual">
+          <div class="heatmap-grid">
+            <div class="hcell" style="opacity:.06"></div><div class="hcell" style="opacity:.14"></div><div class="hcell" style="opacity:.38"></div><div class="hcell" style="opacity:.70"></div><div class="hcell" style="opacity:.20"></div><div class="hcell" style="opacity:.92"></div><div class="hcell" style="opacity:.30"></div><div class="hcell" style="opacity:.50"></div><div class="hcell" style="opacity:.10"></div>
+            <div class="hcell" style="opacity:.58"></div><div class="hcell" style="opacity:.88"></div><div class="hcell" style="opacity:.22"></div><div class="hcell" style="opacity:.08"></div><div class="hcell" style="opacity:.76"></div><div class="hcell" style="opacity:.44"></div><div class="hcell" style="opacity:.06"></div><div class="hcell" style="opacity:.68"></div><div class="hcell" style="opacity:.32"></div>
+            <div class="hcell" style="opacity:.94"></div><div class="hcell" style="opacity:.52"></div><div class="hcell" style="opacity:.06"></div><div class="hcell" style="opacity:.28"></div><div class="hcell" style="opacity:.64"></div><div class="hcell" style="opacity:.14"></div><div class="hcell" style="opacity:.42"></div><div class="hcell" style="opacity:.94"></div><div class="hcell" style="opacity:.18"></div>
           </div>
         </div>
-        <h3>Hour-by-hour heat</h3>
-        <p>A grid of your day, darker where your attention actually was. Patterns show up before you have to name them.</p>
+        <h3>Hourly heatmap</h3>
+        <p>24 cells, each one a minute count. Darker means more time. Your daily pattern becomes a shape you start recognising without looking at numbers.</p>
       </div>
 
-      <div class="feature-card">
-        <div class="visual">
-          <div class="bars" style="height:110px; width:100%;">
-            <div class="bar-col"><div class="bar" style="height:35%"></div><div class="bar-day">M</div></div>
+      <!-- Bars -->
+      <div class="feat-card">
+        <div class="feat-visual">
+          <div class="bars" style="height:100px; width:100%; padding:0 8px;">
+            <div class="bar-col"><div class="bar" style="height:34%"></div><div class="bar-day">M</div></div>
             <div class="bar-col"><div class="bar" style="height:55%"></div><div class="bar-day">T</div></div>
-            <div class="bar-col"><div class="bar above" style="height:88%"></div><div class="bar-day">W</div></div>
+            <div class="bar-col"><div class="bar above" style="height:90%"></div><div class="bar-day">W</div></div>
             <div class="bar-col"><div class="bar" style="height:40%"></div><div class="bar-day">T</div></div>
-            <div class="bar-col"><div class="bar today" style="height:60%"></div><div class="bar-day">F</div></div>
+            <div class="bar-col"><div class="bar today" style="height:62%"></div><div class="bar-day today-lbl">F</div></div>
           </div>
         </div>
-        <h3>Weekly bars, plainly labeled</h3>
-        <p>Three colors, three meanings: today, normal, above average. That's the entire legend — nothing to memorize.</p>
+        <h3>Weekly bars, three colors only</h3>
+        <p>Accent = today. Muted = normal. Red-tinted = above your 30-day average. That's the entire legend — no key required.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ── APP BREAKDOWN ───────────────────────────────────────── -->
 <section>
   <div class="wrap">
     <div class="section-head">
-      <div class="section-label"><span>02</span> — TODAY'S BREAKDOWN</div>
+      <div class="sect-label">02 — Today's breakdown</div>
       <h2>Every app, in order of what it actually cost you.</h2>
     </div>
 
     <div class="app-list">
+      <!-- Row helper: arc svg inline -->
       <div class="app-row">
-        <div class="app-row-left">
-          <div class="app-icon">M</div>
+        <div class="app-left">
+          <div class="app-ring-wrap">
+            <svg viewBox="0 0 36 36" width="36" height="36">
+              <circle cx="18" cy="18" r="13" fill="none" stroke="var(--border2)" stroke-width="3" stroke-linecap="round" stroke-dasharray="55 81" transform="rotate(120 18 18)"/>
+              <circle cx="18" cy="18" r="13" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-dasharray="22 81" transform="rotate(120 18 18)"/>
+            </svg>
+            <span>S</span>
+          </div>
           <div>
-            <div class="app-name">Messages</div>
-            <div class="app-cat">Communication</div>
+            <div class="app-name">Spotify</div>
+            <div class="app-cat">Music</div>
           </div>
         </div>
         <div style="text-align:right;">
-          <div class="app-time">58m</div>
-          <div class="app-bar-track"><div class="app-bar-fill" style="width:35%"></div></div>
+          <div class="app-time">1h 2m</div>
+          <div class="app-sub">~18m/session · ↓</div>
         </div>
       </div>
+
       <div class="app-row">
-        <div class="app-row-left">
-          <div class="app-icon">I</div>
+        <div class="app-left">
+          <div class="app-ring-wrap">
+            <svg viewBox="0 0 36 36" width="36" height="36">
+              <circle cx="18" cy="18" r="13" fill="none" stroke="var(--border2)" stroke-width="3" stroke-linecap="round" stroke-dasharray="55 81" transform="rotate(120 18 18)"/>
+              <circle cx="18" cy="18" r="13" fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round" stroke-dasharray="46 81" transform="rotate(120 18 18)"/>
+            </svg>
+            <span>I</span>
+          </div>
           <div>
             <div class="app-name">Instagram</div>
+            <div class="app-cat" style="color:var(--red);">Social · 2w high</div>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div class="app-time" style="color:var(--red);">58m</div>
+          <div class="app-sub">6× opens · ↑</div>
+        </div>
+      </div>
+
+      <div class="app-row">
+        <div class="app-left">
+          <div class="app-ring-wrap">
+            <svg viewBox="0 0 36 36" width="36" height="36">
+              <circle cx="18" cy="18" r="13" fill="none" stroke="var(--border2)" stroke-width="3" stroke-linecap="round" stroke-dasharray="55 81" transform="rotate(120 18 18)"/>
+              <circle cx="18" cy="18" r="13" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-dasharray="12 81" transform="rotate(120 18 18)"/>
+            </svg>
+            <span>K</span>
+          </div>
+          <div>
+            <div class="app-name">Kindle</div>
+            <div class="app-cat">Reading</div>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div class="app-time">22m</div>
+          <div class="app-sub">~11m/session · ↓</div>
+        </div>
+      </div>
+
+      <div class="app-row">
+        <div class="app-left">
+          <div class="app-ring-wrap">
+            <svg viewBox="0 0 36 36" width="36" height="36">
+              <circle cx="18" cy="18" r="13" fill="none" stroke="var(--border2)" stroke-width="3" stroke-linecap="round" stroke-dasharray="55 81" transform="rotate(120 18 18)"/>
+              <circle cx="18" cy="18" r="13" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-dasharray="8 81" transform="rotate(120 18 18)"/>
+            </svg>
+            <span>W</span>
+          </div>
+          <div>
+            <div class="app-name">WhatsApp</div>
             <div class="app-cat">Social</div>
           </div>
         </div>
         <div style="text-align:right;">
-          <div class="app-time">1h 12m</div>
-          <div class="app-bar-track"><div class="app-bar-fill" style="width:74%; background:var(--barAbove);"></div></div>
-        </div>
-      </div>
-      <div class="app-row">
-        <div class="app-row-left">
-          <div class="app-icon">C</div>
-          <div>
-            <div class="app-name">Chrome</div>
-            <div class="app-cat">Browser</div>
-          </div>
-        </div>
-        <div style="text-align:right;">
-          <div class="app-time">44m</div>
-          <div class="app-bar-track"><div class="app-bar-fill" style="width:28%"></div></div>
-        </div>
-      </div>
-      <div class="app-row">
-        <div class="app-row-left">
-          <div class="app-icon">S</div>
-          <div>
-            <div class="app-name">Spotify</div>
-            <div class="app-cat">Audio</div>
-          </div>
-        </div>
-        <div style="text-align:right;">
-          <div class="app-time">28m</div>
-          <div class="app-bar-track"><div class="app-bar-fill" style="width:18%"></div></div>
+          <div class="app-time">14m</div>
+          <div class="app-sub">22× opens · ↑</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ── PHILOSOPHY ──────────────────────────────────────────── -->
 <section id="philosophy" class="philosophy">
   <div class="wrap">
-    <div>
-      <blockquote>"Serein shows you reality <span>without judgment</span>, but with specificity. It never uses the word bad. Or good."</blockquote>
-      <div class="not-words">
-        <div class="not-word">bad</div>
-        <div class="not-word">good</div>
-        <div class="not-word">addicted</div>
-        <div class="not-word">detox</div>
-        <div class="not-word">streak broken</div>
+    <div class="phil-grid">
+      <div>
+        <p class="phil-quote">"Serein shows you reality <em>without judgment</em>, but with specificity. It never uses the word bad. Or good."</p>
+        <div class="struck-words">
+          <span class="struck">bad</span>
+          <span class="struck">good</span>
+          <span class="struck">addicted</span>
+          <span class="struck">detox</span>
+          <span class="struck">streak broken</span>
+        </div>
       </div>
-    </div>
-    <div class="principle-list">
-      <div class="principle">
-        <div class="principle-mark">01</div>
-        <div><h4>No gamification</h4><p>No streaks to protect, no points to lose. A number is just a number.</p></div>
-      </div>
-      <div class="principle">
-        <div class="principle-mark">02</div>
-        <div><h4>Context, always</h4><p>Every metric sits next to its comparison — vs yesterday, vs your 7-day average.</p></div>
-      </div>
-      <div class="principle">
-        <div class="principle-mark">03</div>
-        <div><h4>Color means one thing</h4><p>Red is above average. Green is below. That mapping never changes, screen to screen.</p></div>
-      </div>
-      <div class="principle">
-        <div class="principle-mark">04</div>
-        <div><h4>You decide what it means</h4><p>Serein reports. It doesn't diagnose, warn, or congratulate.</p></div>
+      <div class="principles">
+        <div class="principle">
+          <div class="p-num">01</div>
+          <div>
+            <h4>No gamification</h4>
+            <p>No streaks to protect, no points to lose. A number is just a number.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">02</div>
+          <div>
+            <h4>Context, always</h4>
+            <p>Every metric sits next to its baseline — your own 30-day average, not someone else's.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">03</div>
+          <div>
+            <h4>Color means one thing</h4>
+            <p>Red is above average. Green is below. That mapping never changes, screen to screen.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <div class="p-num">04</div>
+          <div>
+            <h4>You decide what it means</h4>
+            <p>Serein reports. It doesn't diagnose, warn, or congratulate.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ── SCREENS STRIP ───────────────────────────────────────── -->
 <section id="screens">
   <div class="wrap">
     <div class="section-head">
-      <div class="section-label"><span>03</span> — INSIDE THE APP</div>
-      <h2>Four screens, one honest layout.</h2>
+      <div class="sect-label">03 — Inside the app</div>
+      <h2>Five tabs. One honest layout.</h2>
     </div>
     <div class="screens-strip">
+
+      <!-- Today -->
       <div class="phone">
-        <div class="plabel">Today</div>
-        <div class="pnum">3h 42m</div>
-        <div class="delta" style="margin-top:6px;">↓ 12% vs avg</div>
-        <div class="prows">
-          <div class="prow"><span>Instagram</span><span class="val">1h 12m</span></div>
-          <div class="prow"><span>Messages</span><span class="val">58m</span></div>
-          <div class="prow"><span>Chrome</span><span class="val">44m</span></div>
+        <div class="phone-label">Today</div>
+        <div class="phone-num">3h 42m</div>
+        <div class="phone-delta-g">↓ 12m vs avg</div>
+        <div class="phone-rows">
+          <div class="phone-row"><span>47× opens</span><span class="val">intentionality 62</span></div>
+          <div class="phone-row"><span>Instagram</span><span class="val" style="color:var(--red)">58m ↑</span></div>
+          <div class="phone-row"><span>Spotify</span><span class="val">1h 2m</span></div>
+          <div class="phone-row"><span>Kindle</span><span class="val">22m</span></div>
         </div>
-        <div class="pdot"></div>
+        <div class="phone-dot"></div>
       </div>
+
+      <!-- App detail -->
       <div class="phone">
-        <div class="plabel">App detail</div>
-        <div class="pnum" style="font-size:26px;">Instagram</div>
-        <div class="parc">
-          <svg viewBox="0 0 90 90" width="90" height="90">
-            <circle cx="45" cy="45" r="36" fill="none" stroke="var(--border2)" stroke-width="7" stroke-linecap="round" stroke-dasharray="150 220" transform="rotate(120 45 45)"/>
-            <circle cx="45" cy="45" r="36" fill="none" stroke="var(--barAbove)" stroke-width="7" stroke-linecap="round" stroke-dasharray="128 220" transform="rotate(120 45 45)"/>
+        <div class="phone-label">App detail</div>
+        <div class="phone-num" style="font-size:22px; margin-top:8px;">Instagram</div>
+        <div style="font-size:10px; color:var(--text3); margin-top:2px;">Social</div>
+        <div class="phone-arc">
+          <svg viewBox="0 0 88 88" width="88" height="88">
+            <circle cx="44" cy="44" r="36" fill="none" stroke="var(--border2)" stroke-width="6" stroke-linecap="round" stroke-dasharray="151 225" transform="rotate(120 44 44)"/>
+            <circle cx="44" cy="44" r="36" fill="none" stroke="var(--red)" stroke-width="6" stroke-linecap="round" stroke-dasharray="124 225" transform="rotate(120 44 44)"/>
           </svg>
         </div>
-        <div class="prows">
-          <div class="prow"><span>Daily limit</span><span class="val">1h 30m</span></div>
-          <div class="prow"><span>Opens today</span><span class="val">14</span></div>
+        <div class="phone-rows">
+          <div class="phone-row"><span>Today</span><span class="val" style="color:var(--red)">58m</span></div>
+          <div class="phone-row"><span>Week</span><span class="val">5h 14m</span></div>
+          <div class="phone-row"><span>Opens</span><span class="val">6×</span></div>
         </div>
-        <div class="pdot"></div>
+        <div class="phone-dot"></div>
       </div>
+
+      <!-- Trends -->
       <div class="phone">
-        <div class="plabel">Week</div>
-        <div class="pnum" style="font-size:26px;">18h 06m</div>
-        <div style="margin-top:24px;">
-          <div class="bars" style="height:70px;">
+        <div class="phone-label">Trends</div>
+        <div class="phone-num" style="font-size:24px;">18h 6m</div>
+        <div style="font-size:10px; color:var(--green); margin-top:4px;">↓ 1h 8m vs last week</div>
+        <div style="margin-top:20px;">
+          <div class="bars" style="height:64px;">
             <div class="bar-col"><div class="bar" style="height:40%"></div></div>
-            <div class="bar-col"><div class="bar" style="height:60%"></div></div>
-            <div class="bar-col"><div class="bar above" style="height:95%"></div></div>
-            <div class="bar-col"><div class="bar" style="height:35%"></div></div>
-            <div class="bar-col"><div class="bar" style="height:55%"></div></div>
+            <div class="bar-col"><div class="bar" style="height:58%"></div></div>
+            <div class="bar-col"><div class="bar above" style="height:94%"></div></div>
+            <div class="bar-col"><div class="bar" style="height:34%"></div></div>
+            <div class="bar-col"><div class="bar" style="height:52%"></div></div>
             <div class="bar-col"><div class="bar" style="height:30%"></div></div>
-            <div class="bar-col"><div class="bar today" style="height:50%"></div></div>
+            <div class="bar-col"><div class="bar today" style="height:48%"></div></div>
           </div>
         </div>
-        <div class="pdot"></div>
-      </div>
-      <div class="phone">
-        <div class="plabel">Unlocks</div>
-        <div class="pnum">142</div>
-        <div class="delta" style="margin-top:6px; color:var(--text3);">Every screen-on counted</div>
-        <div class="prows">
-          <div class="prow"><span>Longest gap</span><span class="val">2h 14m</span></div>
-          <div class="prow"><span>First unlock</span><span class="val">7:04 AM</span></div>
-          <div class="prow"><span>Last unlock</span><span class="val">11:52 PM</span></div>
+        <div class="phone-rows" style="margin-top:16px;">
+          <div class="phone-row"><span>Best day</span><span class="val" style="color:var(--green)">Tue · 1h 44m</span></div>
+          <div class="phone-row"><span>Worst day</span><span class="val" style="color:var(--red)">Wed · 4h 2m</span></div>
         </div>
-        <div class="pdot"></div>
+        <div class="phone-dot"></div>
       </div>
+
+      <!-- Hours -->
+      <div class="phone">
+        <div class="phone-label">Hours</div>
+        <div style="margin-top:14px; display:grid; grid-template-columns:repeat(6,1fr); gap:3px;">
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.07"></div>
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.07"></div>
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.12"></div>
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.55"></div>
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.82"></div>
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.30"></div>
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.94"></div>
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.60"></div>
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.20"></div>
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.07"></div>
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.45"></div>
+          <div style="height:22px;border-radius:3px;background:var(--accent);opacity:0.70"></div>
+        </div>
+        <div class="phone-rows" style="margin-top:20px;">
+          <div class="phone-row"><span>Peak hour</span><span class="val">10 am</span></div>
+          <div class="phone-row"><span>Active hours</span><span class="val">9 of 24</span></div>
+          <div class="phone-row"><span>Longest break</span><span class="val">2h 14m</span></div>
+        </div>
+        <div class="phone-dot"></div>
+      </div>
+
+      <!-- Theme -->
+      <div class="phone">
+        <div class="phone-label">Theme</div>
+        <div style="margin-top:16px; display:flex; flex-direction:column; gap:10px;">
+          <div style="background:#0F1117;border:2px solid var(--accent);border-radius:8px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:11px;color:#E8ECF4;">Slate Blue</span>
+            <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);"></div>
+          </div>
+          <div style="background:#F7F4EE;border:1px solid #D8D2C6;border-radius:8px;padding:8px 10px;">
+            <span style="font-size:11px;color:#2A2520;">Ink on Paper</span>
+          </div>
+          <div style="background:#0F1117;border:2px solid var(--accent);border-radius:8px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:11px;color:#E8ECF4;">Slate Blue</span>
+          </div>
+          <div style="background:#0D1610;border:1px solid #1E2E1E;border-radius:8px;padding:8px 10px;">
+            <span style="font-size:11px;color:#D8EDD8;">Forest</span>
+          </div>
+        </div>
+        <div class="phone-dot"></div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<section id="get" class="final-cta">
+<!-- ── DOWNLOAD ────────────────────────────────────────────── -->
+<section id="download" class="download-section">
   <div class="wrap">
     <h2>Not another dashboard telling you to <em>do better.</em></h2>
-    <p>Just an honest record of where your day went.</p>
-    <div class="hero-cta-row">
-      <a class="btn-primary" href="#">Get Serein Stats</a>
+    <p class="hero-sub">Just an honest record of where your day went. Free, open source, runs entirely on your device.</p>
+
+    <div class="dl-card">
+      <div class="dl-card-top">
+        <div class="dl-app-identity">
+          <div class="dl-logomark">S</div>
+          <div>
+            <div class="dl-app-name">Serein Stats</div>
+            <div class="dl-app-sub">Screen Intelligence · Android</div>
+          </div>
+        </div>
+        <div class="version-chip" id="version-chip">Checking...</div>
+      </div>
+      <div class="hline-card"></div>
+      <div class="dl-meta">
+        <div class="dl-meta-item">
+          <div class="dl-meta-val">Android</div>
+          <div class="dl-meta-lbl">Platform</div>
+        </div>
+        <div class="dl-meta-item">
+          <div class="dl-meta-val">8.0+</div>
+          <div class="dl-meta-lbl">Min version</div>
+        </div>
+        <div class="dl-meta-item">
+          <div class="dl-meta-val">On-device</div>
+          <div class="dl-meta-lbl">Data stays</div>
+        </div>
+      </div>
+      <a class="dl-btn" id="dl-btn" href="#" download>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 1v9M4 6.5 8 10l4-3.5M2 14h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="dl-btn-text">Loading latest release...</span>
+      </a>
+      <p class="dl-note" id="dl-note">
+        Sideloaded APK — enable <strong>Install unknown apps</strong> in Android settings before installing.<br>
+        <a href="https://github.com/Arnav-Deoghare/Serein-stats/releases" target="_blank" rel="noopener">All releases on GitHub →</a>
+      </p>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <div class="foot-brand"><div class="logomark" style="width:24px;height:24px;font-size:12px;">S</div>SEREIN — SCREEN INTELLIGENCE</div>
+    <div class="foot-brand">
+      <div class="logomark" style="width:22px;height:22px;font-size:11px;border-radius:6px;">S</div>
+      Serein — Screen Intelligence
+    </div>
     <div class="foot-links">
       <a href="#how">How it reads</a>
       <a href="#philosophy">Philosophy</a>
-      <a href="#screens">Screens</a>
+      <a href="https://github.com/Arnav-Deoghare/Serein-stats" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div>
 </footer>
+
+
+<script>
+(async function () {
+  const REPO = 'Arnav-Deoghare/Serein-stats';
+  const API  = `https://api.github.com/repos/${REPO}/releases/latest`;
+
+  const chip    = document.getElementById('version-chip');
+  const btn     = document.getElementById('dl-btn');
+  const btnText = document.getElementById('dl-btn-text');
+  const note    = document.getElementById('dl-note');
+
+  try {
+    const res  = await fetch(API, { headers: { Accept: 'application/vnd.github+json' } });
+    if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+    const data = await res.json();
+
+    const tag      = data.tag_name || 'latest';
+    const pubDate  = data.published_at
+      ? new Date(data.published_at).toLocaleDateString('en-US', { day:'numeric', month:'short', year:'numeric' })
+      : '';
+
+    // Find the APK asset — prefer app-release.apk, fall back to any .apk
+    const assets = data.assets || [];
+    const apk    = assets.find(a => a.name === 'app-release.apk')
+                || assets.find(a => a.name.endsWith('.apk'));
+
+    const dlUrl  = apk
+      ? apk.browser_download_url
+      : `https://github.com/${REPO}/releases/tag/${tag}`;
+
+    const size   = apk
+      ? `${(apk.size / 1_048_576).toFixed(1)} MB`
+      : null;
+
+    // Update chip
+    if (chip) chip.textContent = tag;
+
+    // Update button
+    if (btn)     btn.href = dlUrl;
+    if (btnText) btnText.textContent = `Download APK (${tag})`;
+
+    // Update note
+    if (note && pubDate) {
+      const sizeStr = size ? ` · ${size}` : '';
+      note.innerHTML = `
+        Released ${pubDate}${sizeStr} · Sideloaded APK<br>
+        Enable <strong>Install unknown apps</strong> in Android settings before installing.<br>
+        <a href="https://github.com/${REPO}/releases" target="_blank" rel="noopener">All releases on GitHub →</a>
+      `;
+    }
+
+    // Update nav CTA
+    const navCta = document.getElementById('nav-cta');
+    if (navCta) navCta.textContent = `Download ${tag}`;
+
+  } catch (err) {
+    // Graceful fallback — keep the button pointing at the releases page
+    console.warn('Could not fetch latest release:', err);
+    if (chip)    chip.textContent  = 'Latest';
+    if (btnText) btnText.textContent = 'Download Latest APK';
+    if (btn)     btn.href = `https://github.com/${REPO}/releases/latest`;
+    const navCta = document.getElementById('nav-cta');
+    if (navCta) navCta.textContent = 'Download';
+  }
+})();
+</script>
 
 </body>
 </html>
