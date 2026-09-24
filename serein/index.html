@@ -571,11 +571,24 @@ footer .wrap {
 </head>
 <body>
 
+<!-- Shared logo mark: five circles, outer centered, drifting inward and
+     darkening — same geometry as the launcher icon, Slate-toned to match
+     this page's palette. Defined once, reused via <use> everywhere. -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="serein-mark" viewBox="0 0 44 44">
+    <circle cx="22" cy="22" r="11" fill="#C5D3E8"/>
+    <circle cx="22.9" cy="22.9" r="8.8" fill="#A2B9DA"/>
+    <circle cx="23.8" cy="23.8" r="6.6" fill="#7E9ECC"/>
+    <circle cx="24.7" cy="24.7" r="4.4" fill="#4E6E9C"/>
+    <circle cx="25.6" cy="25.6" r="2.2" fill="#334865"/>
+  </symbol>
+</svg>
+
 <!-- ── HEADER ─────────────────────────────────────────────── -->
 <header>
   <div class="wrap nav-row">
     <div class="brand">
-      <div class="logomark">S</div>
+      <div class="logomark"><svg width="70%" height="70%" viewBox="0 0 44 44"><use href="#serein-mark"/></svg></div>
       <span class="wordmark">Serein</span>
     </div>
     <nav class="nav-links">
@@ -954,7 +967,7 @@ footer .wrap {
     <div class="dl-card">
       <div class="dl-card-top">
         <div class="dl-app-identity">
-          <div class="dl-logomark">S</div>
+          <div class="dl-logomark"><svg width="70%" height="70%" viewBox="0 0 44 44"><use href="#serein-mark"/></svg></div>
           <div>
             <div class="dl-app-name">Serein Stats</div>
             <div class="dl-app-sub">Screen Intelligence · Android</div>
@@ -994,7 +1007,7 @@ footer .wrap {
 <footer>
   <div class="wrap">
     <div class="foot-brand">
-      <div class="logomark" style="width:22px;height:22px;font-size:11px;border-radius:6px;">S</div>
+      <div class="logomark" style="width:22px;height:22px;border-radius:6px;"><svg width="70%" height="70%" viewBox="0 0 44 44"><use href="#serein-mark"/></svg></div>
       Serein — Screen Intelligence
     </div>
     <div class="foot-links">
