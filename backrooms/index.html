@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Backrooms — Arnav Deoghare</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Press+Start+2P&family=Bangers&display=swap" rel="stylesheet">
+<style>
+  :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{font-family:'Space Grotesk',sans-serif;background:#f2ead2;color:#181206;position:relative;}
+  .halftone{position:fixed;inset:0;background-image:radial-gradient(#181206 1px, transparent 1.2px);background-size:9px 9px;opacity:0.06;pointer-events:none;z-index:0;}
+  main{max-width:960px;margin:0 auto;padding:36px 16px 80px;position:relative;z-index:1;}
+  a{color:inherit;}
+
+  .byline{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:0.06em;color:#181206;text-align:center;margin-bottom:10px;}
+  .titlebar{border:5px solid #181206;background:#fff9e6;padding:20px;text-align:center;}
+  h1{font-size:0;line-height:1.6;margin:0;}
+  h1 span{font-family:'Press Start 2P',monospace;font-size:clamp(16px,5vw,26px);display:inline-block;padding:4px 3px;margin:1px;}
+  h1 span:nth-child(6n+1){color:#c0392b;}
+  h1 span:nth-child(6n+2){color:#0a6b62;}
+  h1 span:nth-child(6n+3){color:#b6821f;}
+  h1 span:nth-child(6n+4){color:#2f5fa8;}
+  h1 span:nth-child(6n+5){color:#181206;}
+  h1 span:nth-child(6n){color:#8a3fb0;}
+
+  .blurb{border:2.5px solid #181206;border-top:none;background:#fff9e6;padding:22px;}
+  .bubble{font-family:'Caveat',cursive;font-size:20px;line-height:1.4;max-width:640px;margin:0 auto;text-align:center;}
+
+  .titlewrap{position:relative;}
+  .speedlines{position:absolute;inset:-40px;background:conic-gradient(from 0deg,transparent 0deg 8deg,rgba(24,18,6,0.05) 8deg 10deg);z-index:-1;pointer-events:none;}
+
+  .caption{display:inline-block;background:#ffe14d;border:2px solid #181206;font-family:'Caveat',cursive;font-size:17px;padding:4px 14px;transform:rotate(-2deg);margin:44px 0 -4px;position:relative;box-shadow:3px 3px 0 #181206;}
+
+  .chapter{border:4px solid #181206;background:#fff9e6;padding:14px 18px;margin:10px 0 18px;position:relative;overflow:hidden;}
+  .chapter::before{content:'';position:absolute;inset:0;background-image:radial-gradient(#181206 1px, transparent 1.2px);background-size:9px 9px;opacity:0.06;}
+  .chapter .chnum{font-family:'Space Mono',monospace;font-size:11px;opacity:.6;position:relative;}
+  .chapter h2{font-family:'Bangers',cursive;font-size:30px;letter-spacing:0.02em;margin:2px 0 0;background:none;color:#181206;display:block;padding:0;position:relative;}
+
+  .panelbox{border:5px solid #181206;padding:20px;background:#f2ead2;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;}
+  .card{background:#fdf6e3;border:3px solid #181206;box-shadow:5px 5px 0 #181206;padding:18px;position:relative;transform:rotate(-1deg);}
+  .grid .card:nth-child(2n){transform:rotate(1deg);}
+  .grid .card:nth-child(3n){transform:rotate(-0.5deg);}
+  .spec{font-family:'Space Mono',monospace;font-size:10px;opacity:.6;}
+  .card b{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;display:block;margin-top:4px;}
+  .card p{font-size:14px;margin:8px 0;}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+  .tags span{font-family:'Space Mono',monospace;font-size:10px;background:#eee0bd;border:1px solid #181206;padding:2px 6px;}
+  .stamp{display:inline-block;border:2px solid #0a6b62;color:#0a6b62;font-family:'Space Mono',monospace;font-size:10px;padding:2px 6px;transform:rotate(-4deg);margin-top:6px;}
+  .stamp.cooking{border-color:#b6821f;color:#b6821f;}
+  .stamp.onhold{border-color:#5a6b7a;color:#5a6b7a;}
+  .stamp.dead{border-color:#c0392b;color:#c0392b;}
+  .card{cursor:pointer;}
+  @keyframes flash10{0%{box-shadow:0 0 0 4px #ffe14d,5px 5px 0 #181206;}100%{box-shadow:5px 5px 0 #181206;}}
+  .card.flash{animation:flash10 0.9s ease-out;}
+
+  .dotted{border-style:dashed;box-shadow:none;}
+  .tape{position:absolute;top:-10px;left:16px;width:56px;height:18px;background:rgba(230,210,140,.75);border:1px solid rgba(150,130,70,.5);transform:rotate(-4deg);}
+  .tombstone{border-radius:50px 50px 6px 6px;position:relative;}
+  .tombstone-icon{position:absolute;top:-18px;left:-12px;width:36px;height:42px;transform:rotate(-7deg);z-index:2;}
+  .card.onhold-card{border-style:dashed;border-color:#5a6b7a;box-shadow:none;}
+  .card.onhold-card .tape{background:rgba(160,175,190,.55);border-color:rgba(90,107,122,.5);}
+
+  .secret{background:#efe6c9;border-style:dotted;box-shadow:none;color:#c9bd97;position:relative;}
+  .secret b,.secret p,.secret .spec{color:#c9bd97;}
+  .secret:hover{color:#181206;}
+  .secret:hover b,.secret:hover p,.secret:hover .spec{color:#181206;}
+  .secret::after{content:'?!';font-family:'Bangers',cursive;font-size:22px;color:#ff5c5c;position:absolute;top:-14px;right:-10px;transform:rotate(14deg);-webkit-text-stroke:1px #181206;}
+
+  .modal-bg{position:fixed;inset:0;background:rgba(24,18,6,.7);display:none;align-items:center;justify-content:center;z-index:50;padding:20px;}
+  .modal-bg.open{display:flex;}
+
+  .modal-wide{background:#fff9e6;border:4px solid #181206;box-shadow:8px 8px 0 #181206;padding:26px;max-width:460px;width:100%;position:relative;max-height:85vh;overflow-y:auto;}
+  .modal-wide .mspec{font-family:'Space Mono',monospace;font-size:11px;opacity:.6;}
+  .modal-wide h3{font-family:'Bangers',cursive;font-size:32px;margin:2px 0 6px;}
+  .modal-wide .mstamp{display:inline-block;border:2px solid #0a6b62;color:#0a6b62;font-family:'Space Mono',monospace;font-size:10px;padding:2px 6px;transform:rotate(-4deg);margin-bottom:10px;}
+  .modal-wide .mstamp.cooking{border-color:#b6821f;color:#b6821f;}
+  .modal-wide .mstamp.onhold{border-color:#5a6b7a;color:#5a6b7a;}
+  .modal-wide .mstamp.dead{border-color:#c0392b;color:#c0392b;}
+  .modal-wide .mtags{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 14px;}
+  .modal-wide .mtags span{font-family:'Space Mono',monospace;font-size:10px;background:#eee0bd;border:1px solid #181206;padding:2px 6px;}
+  .modal-wide p{font-size:14px;line-height:1.5;margin:0 0 12px;}
+  .modal-wide .mlabel{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.04em;color:#0a6b62;margin-bottom:2px;}
+  .modal-wide .mlinks{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+  .modal-wide .mlinks a{font-family:'Press Start 2P',monospace;font-size:10px;background:#ffe14d;border:3px solid #181206;padding:8px 12px;box-shadow:3px 3px 0 #181206;text-decoration:none;color:#181206;}
+  .modal-wide .mclose{position:absolute;top:10px;right:12px;font-family:'Space Mono',monospace;font-size:16px;border:2px solid #181206;background:#fff;width:28px;height:28px;cursor:pointer;line-height:1;}
+  .modal{background:#fff9e6;border:4px solid #181206;box-shadow:8px 8px 0 #181206;padding:26px;max-width:400px;text-align:center;}
+  .modal h3{font-family:'Bangers',cursive;font-size:30px;margin:0 0 8px;}
+  .modal button{margin-top:14px;font-family:'Space Mono',monospace;font-size:12px;border:2px solid #181206;background:#ffe14d;padding:6px 14px;cursor:pointer;}
+
+  .shufflebtn{font-family:'Press Start 2P',monospace;font-size:12px;color:#181206;background:#ffe14d;border:3px solid #181206;padding:12px 18px;display:inline-block;box-shadow:4px 4px 0 #181206;cursor:pointer;margin:44px 0 0;}
+  .shufflebtn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #181206;}
+
+  .mascot-wrap{position:fixed;bottom:18px;right:18px;z-index:40;cursor:pointer;text-align:center;}
+  .mascot-wrap svg{width:56px;height:70px;animation:mascotbob 2.2s ease-in-out infinite;filter:drop-shadow(3px 3px 0 #181206);}
+  @keyframes mascotbob{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  .mascot-bubble{position:absolute;bottom:78px;right:0;background:#fff;border:2px solid #181206;border-radius:14px 14px 4px 14px;padding:8px 12px;font-family:'Caveat',cursive;font-size:16px;white-space:nowrap;display:none;box-shadow:3px 3px 0 #181206;}
+  .mascot-bubble.show{display:block;}
+
+  .burstword{position:fixed;font-family:'Bangers',cursive;font-size:26px;pointer-events:none;z-index:60;animation:burstpop 0.7s ease-out forwards;}
+  @keyframes burstpop{0%{transform:scale(0.4) rotate(-8deg);opacity:0;}30%{transform:scale(1.2) rotate(4deg);opacity:1;}100%{transform:scale(1) rotate(0deg) translateY(-24px);opacity:0;}}
+
+  .log{background:#fdf6e3;border:2.5px solid #181206;padding:4px 18px;}
+  .log li{font-family:'Space Mono',monospace;font-size:13px;padding:10px 0;border-bottom:1px dashed #181206;list-style:none;}
+  .log li:last-child{border-bottom:none;}
+  .log .dt{opacity:.55;margin-right:8px;}
+
+  .usetags{display:flex;flex-wrap:wrap;gap:8px;}
+  .usetags span{font-family:'Space Mono',monospace;font-size:12px;background:#fff9e6;border:2px solid #181206;padding:5px 10px;}
+
+  footer{margin-top:56px;border:3px solid #181206;background:#fff9e6;padding:22px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;}
+  .socials{display:flex;gap:10px;flex-wrap:wrap;}
+  .social{font-family:'Press Start 2P',monospace;font-size:10px;background:#ffe14d;border:3px solid #181206;padding:8px 12px;box-shadow:3px 3px 0 #181206;text-decoration:none;color:#181206;}
+</style>
+</head>
+<body>
+<div class="halftone"></div>
+<main>
+
+  <div class="byline">ARNAV DEOGHARE</div>
+  <div class="titlewrap">
+    <div class="speedlines"></div>
+    <div class="titlebar">
+      <h1><span>B</span><span>A</span><span>C</span><span>K</span><span>R</span><span>O</span><span>O</span><span>M</span><span>S</span></h1>
+    </div>
+  </div>
+  <div class="blurb">
+    <p class="bubble">this is the other portfolio — the one with no résumé energy. everything here got built because i needed it, wanted it, or couldn't sleep. some of it works. some of it is dead. all of it was fun to make.</p>
+  </div>
+
+  <span class="caption">meanwhile, down the hallway...</span>
+  <div class="chapter"><span class="chnum">CHAPTER 1</span><h2>THE HALLWAY</h2></div>
+  <div class="panelbox">
+  <div class="grid" id="hallway">
+    <div class="card" data-name="Serein Stats">
+      <div class="spec">ISSUE #01</div>
+      <b>Serein Stats</b>
+      <p>screen time analytics you'll actually open — five tabs, several color schemes.</p>
+      <div class="tags"><span>Kotlin</span><span>UsageStatsManager</span><span>GitHub Actions</span></div>
+      <div class="stamp">ALIVE</div>
+    </div>
+    <div class="card" data-name="Zen Launcher">
+      <div class="spec">ISSUE #02</div>
+      <b>Zen Launcher</b>
+      <p>a minimal Android home screen — allowlisting, texture themes, notification filtering.</p>
+      <div class="tags"><span>Kotlin</span><span>Jetpack Compose</span></div>
+      <div class="stamp">ALIVE</div>
+    </div>
+    <div class="card" data-name="TrustPulse">
+      <div class="spec">ISSUE #03</div>
+      <b>TrustPulse</b>
+      <p>a Chrome extension that scores how trustworthy a webpage is.</p>
+      <div class="tags"><span>Chrome MV3</span><span>Shadow DOM</span></div>
+      <div class="stamp">ALIVE</div>
+    </div>
+    <div class="card" data-name="Driftlog">
+      <div class="spec">ISSUE #04</div>
+      <b>Driftlog</b>
+      <p>tracks how long you scrolled instead of doing anything useful.</p>
+      <div class="tags"><span>Chrome MV3</span><span>Idle Detection</span></div>
+      <div class="stamp">ALIVE</div>
+    </div>
+    <div class="card secret" id="secretCard">
+      <div class="spec">ISSUE #??</div>
+      <b>???</b>
+      <p>looks blank. probably nothing here.</p>
+    </div>
+  </div>
+  </div>
+
+  <div style="text-align:center;">
+    <div class="shufflebtn" id="shuffleBtn">▸ RANDOMIZE</div>
+  </div>
+
+  <span class="caption">elsewhere in the backrooms...</span>
+  <div class="chapter"><span class="chnum">CHAPTER 2</span><h2>CURRENTLY COOKING</h2></div>
+  <div class="panelbox">
+  <div class="grid">
+    <div class="card dotted" data-name="P-Tracker">
+      <div class="tape"></div>
+      <div class="spec">specimen #07</div>
+      <b>P-Tracker</b>
+      <p>a native period-tracking app, still being built — local-first, no cloud.</p>
+      <div class="tags"><span>Kotlin</span><span>Jetpack Compose</span><span>Material 3</span></div>
+      <div class="stamp cooking">COOKING</div>
+    </div>
+  </div>
+  </div>
+
+  <span class="caption">frozen mid-thought...</span>
+  <div class="chapter"><span class="chnum">CHAPTER 3</span><h2>ON HOLD</h2></div>
+  <div class="panelbox">
+  <div class="grid">
+    <div class="card onhold-card" data-name="LiftLog">
+      <div class="tape"></div>
+      <div class="spec">specimen #08</div>
+      <b>LiftLog</b>
+      <p>a local-first gym photo tracker, sideloaded straight to your phone.</p>
+      <div class="tags"><span>React Native</span><span>Expo</span><span>EAS</span></div>
+      <div class="stamp onhold">ON HOLD</div>
+    </div>
+    <div class="card onhold-card" data-name="Finance Tracker">
+      <div class="tape"></div>
+      <div class="spec">specimen #09</div>
+      <b>Finance Tracker</b>
+      <p>a single-file HTML app that auto-categorizes months of my own spending.</p>
+      <div class="tags"><span>HTML/JS</span><span>Chart.js</span></div>
+      <div class="stamp onhold">ON HOLD</div>
+    </div>
+  </div>
+  </div>
+
+  <span class="caption">here lies...</span>
+  <div class="chapter"><span class="chnum">CHAPTER 4</span><h2>THE MORGUE</h2></div>
+  <div class="panelbox">
+  <div class="grid">
+    <div class="card dotted tombstone" data-name="Lumina">
+      <div class="tape"></div>
+      <svg class="tombstone-icon" viewBox="0 0 36 42">
+        <path d="M5 40 L5 17 Q4 4 18 4 Q32 4 31 17 L31 40 Z" fill="#fdf6e3" stroke="#181206" stroke-width="2.2" stroke-linejoin="round"/>
+        <line x1="10" y1="40" x2="10" y2="24" stroke="#181206" stroke-width="1.3" opacity="0.35"/>
+        <line x1="26" y1="40" x2="26" y2="24" stroke="#181206" stroke-width="1.3" opacity="0.35"/>
+        <text x="18" y="27" font-family="'Caveat',cursive" font-size="12" text-anchor="middle" fill="#181206">RIP</text>
+      </svg>
+      <div class="spec">specimen #10</div>
+      <b>Lumina</b>
+      <p>a browser photo manager. died to a Google Photos OAuth review wall.</p>
+      <div class="tags"><span>HTML/JS</span><span>Vercel</span></div>
+      <div class="stamp dead">DEAD</div>
+    </div>
+  </div>
+  </div>
+
+  <span class="caption">3 months of chaos, condensed...</span>
+  <div class="chapter"><span class="chnum">CHAPTER 5</span><h2>BUILD LOG</h2></div>
+  <ul class="log">
+    <li><span class="dt">latest →</span> poking at camera-LiDAR calibration, no checkerboard, purely out of spite for easy problems</li>
+    <li><span class="dt">→</span> P-Tracker still cooking, Material 3 UI mostly there</li>
+    <li><span class="dt">→</span> Lumina officially declared dead, RIP to a good idea killed by an OAuth form</li>
+    <li><span class="dt">→</span> shipped Driftlog and TrustPulse to their respective stores</li>
+    <li><span class="dt">→</span> Zen Launcher and Serein Stats out in the wild, still standing</li>
+  </ul>
+
+  <div class="chapter"><span class="chnum">CHAPTER 6</span><h2>USES</h2></div>
+  <div class="panelbox">
+  <div class="usetags">
+    <span>Kotlin / Jetpack Compose</span>
+    <span>React Native + Expo</span>
+    <span>Chrome MV3</span>
+    <span>Python</span>
+    <span>GitHub Actions (CI/CD)</span>
+    <span>EAS Build</span>
+    <span>Vercel</span>
+  </div>
+  </div>
+
+  <footer>
+    <div class="socials">
+      <a class="social" href="https://arnav-deoghare.github.io" title="back to the real portfolio">🚪 EXIT</a>
+      <a class="social" href="https://github.com/Arnav-Deoghare" target="_blank" rel="noopener">GITHUB</a>
+      <a class="social" href="https://www.linkedin.com/in/arnav-deoghare/" target="_blank" rel="noopener">LINKEDIN</a>
+    </div>
+  </footer>
+
+</main>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h3>you found it!</h3>
+    <p style="font-family:'Space Mono',monospace;font-size:13px;">there's nothing here yet. but you're clearly the kind of person who clicks on suspicious blank boxes, so — respect. check back later.</p>
+    <button id="modalClose">close</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="projectModalBg">
+  <div class="modal-wide" id="projectModalBody">
+    <button class="mclose" id="projectModalClose">✕</button>
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<div class="mascot-wrap" id="mascotWrap">
+  <div class="mascot-bubble" id="mascotBubble"></div>
+  <svg viewBox="0 0 8 9" shape-rendering="crispEdges">
+    <g fill="#fdf6e3" stroke="#181206" stroke-width="0.08">
+      <rect x="2" y="0" width="4" height="1"/>
+      <rect x="1" y="1" width="6" height="1"/>
+      <rect x="0" y="2" width="8" height="1"/>
+      <rect x="0" y="3" width="8" height="1"/>
+      <rect x="0" y="4" width="8" height="1"/>
+      <rect x="0" y="5" width="8" height="1"/>
+      <rect x="0" y="6" width="8" height="1"/>
+      <rect x="0" y="7" width="8" height="1"/>
+      <rect x="0" y="8" width="1" height="1"/>
+      <rect x="2" y="8" width="1" height="1"/>
+      <rect x="4" y="8" width="1" height="1"/>
+      <rect x="6" y="8" width="1" height="1"/>
+    </g>
+    <rect x="2" y="3" width="1" height="1" fill="#181206"/>
+    <rect x="5" y="3" width="1" height="1" fill="#181206"/>
+  </svg>
+</div>
+
+<script>
+(function(){
+  // page-turn "thwip" sound on card click
+  var ctx;
+  function thwip(){
+    try{
+      ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(420, ctx.currentTime);
+      o.frequency.exponentialRampToValueAtTime(90, ctx.currentTime + 0.12);
+      g.gain.setValueAtTime(0.06, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      o.connect(g); g.connect(ctx.destination);
+      o.start(); o.stop(ctx.currentTime + 0.16);
+    }catch(e){}
+  }
+  document.querySelectorAll('.card').forEach(function(c){
+    c.addEventListener('click', function(e){
+      if(c.id === 'secretCard') return;
+      thwip();
+    });
+  });
+
+  // project detail data — swap in real links/copy whenever you have them
+  var projectData = {
+    "Serein Stats": {
+      status:"alive", stampText:"ALIVE",
+      desc:"A screen-time analytics companion for Android — five tabs of usage breakdowns and a handful of color schemes, built on top of UsageStatsManager instead of squinting at raw system numbers.",
+      why:"[add your own story here: what made you build this instead of using an existing screen-time app?]",
+      tags:["Kotlin","UsageStatsManager","GitHub Actions CI/CD"],
+      site:"#", github:"#"
+    },
+    "Zen Launcher": {
+      status:"alive", stampText:"ALIVE",
+      desc:"A minimal Android home screen — app allowlisting, texture-based themes, and notification filtering, for a phone that doesn't fight for your attention.",
+      why:"[add your own story here: what pushed you to build your own launcher?]",
+      tags:["Kotlin","Jetpack Compose"],
+      site:"#", github:"#"
+    },
+    "LiftLog": {
+      status:"onhold", stampText:"ON HOLD",
+      desc:"A local-first gym photo tracker built in React Native — log lifts with photos, no account, no cloud sync, sideloaded straight to your phone.",
+      why:"[add your own story here: what gym-tracking itch wasn't being scratched by other apps, and what put this on ice?]",
+      tags:["React Native","Expo","EAS Build"],
+      site:"#", github:"#"
+    },
+    "TrustPulse": {
+      status:"alive", stampText:"ALIVE",
+      desc:"A Chrome extension that scores how trustworthy a webpage looks, surfaced through a Shadow DOM badge with an accordion of the issues it found.",
+      why:"[add your own story here: what made you want a trust score baked into your browser?]",
+      tags:["Chrome MV3","Shadow DOM"],
+      site:"#", github:"#"
+    },
+    "Driftlog": {
+      status:"alive", stampText:"ALIVE",
+      desc:"A browsing-time tracker Chrome extension with idle detection and a heatmap history view — published to the Chrome Web Store, optional host permissions.",
+      why:"[add your own story here: what made you want to actually see your scroll time instead of guessing?]",
+      tags:["Chrome MV3","Idle Detection"],
+      site:"#", github:"#"
+    },
+    "Finance Tracker": {
+      status:"onhold", stampText:"ON HOLD",
+      desc:"A single-file HTML app seeded with my own Jan–July 2026 spending — auto-categorization, Chart.js dashboards, and XLSX import for deeper analytics.",
+      why:"[add your own story here: what was wrong with the budgeting apps you tried first, and what put this on hold?]",
+      tags:["HTML/JS","Chart.js"],
+      site:"#", github:"#"
+    },
+    "P-Tracker": {
+      status:"cooking", stampText:"COOKING",
+      desc:"A native Android period-tracking app — Kotlin/Jetpack Compose, Material 3 UI, fully local-first with no cloud dependency.",
+      why:"[add your own story here: who's it for, and why local-first mattered to you?]",
+      tags:["Kotlin","Jetpack Compose","Material 3"],
+      site:"#", github:"#"
+    },
+    "Lumina": {
+      status:"dead", stampText:"DEAD",
+      desc:"A browser-based photo manager, deployed to Vercel — meant to give a lightweight way to browse and organize photos without a heavyweight desktop app.",
+      why:"Hit a hard wall on Google Photos OAuth scope verification requirements and couldn't get past it — officially retired to the morgue.",
+      tags:["HTML/JS","Vercel"],
+      site:"#", github:"#"
+    }
+  };
+
+  var projectModalBg = document.getElementById('projectModalBg');
+  var projectModalBody = document.getElementById('projectModalBody');
+  function openProjectModal(name){
+    var d = projectData[name];
+    if(!d) return;
+    projectModalBody.innerHTML =
+      '<button class="mclose" id="projectModalClose">✕</button>' +
+      '<div class="mspec">FULL FILE</div>' +
+      '<h3>' + name + '</h3>' +
+      '<div class="mstamp' + (d.status==='cooking'?' cooking':d.status==='onhold'?' onhold':d.status==='dead'?' dead':'') + '">' + d.stampText + '</div>' +
+      '<div class="mtags">' + d.tags.map(function(t){return '<span>'+t+'</span>';}).join('') + '</div>' +
+      '<p>' + d.desc + '</p>' +
+      '<div class="mlabel">' + (d.status==='dead' ? 'WHY IT DIED' : 'WHY IT STARTED') + '</div>' +
+      '<p>' + d.why + '</p>' +
+      '<div class="mlinks"><a href="' + d.site + '" target="_blank" rel="noopener">🔗 SITE</a><a href="' + d.github + '" target="_blank" rel="noopener">🐙 GITHUB</a></div>';
+    document.getElementById('projectModalClose').addEventListener('click', function(){
+      projectModalBg.classList.remove('open');
+    });
+    projectModalBg.classList.add('open');
+  }
+  document.querySelectorAll('.card[data-name]').forEach(function(c){
+    c.addEventListener('click', function(){
+      openProjectModal(c.getAttribute('data-name'));
+    });
+  });
+  projectModalBg.addEventListener('click', function(e){
+    if(e.target === projectModalBg) projectModalBg.classList.remove('open');
+  });
+
+  // secret panel
+  var secret = document.getElementById('secretCard');
+  var modalBg = document.getElementById('modalBg');
+  if(secret){
+    secret.addEventListener('click', function(){
+      try{ thwip(); }catch(e){}
+      modalBg.classList.add('open');
+    });
+  }
+  document.getElementById('modalClose').addEventListener('click', function(){
+    modalBg.classList.remove('open');
+  });
+  modalBg.addEventListener('click', function(e){
+    if(e.target === modalBg) modalBg.classList.remove('open');
+  });
+
+  // shuffle button
+  var shuffleBtn = document.getElementById('shuffleBtn');
+  if(shuffleBtn){
+    shuffleBtn.addEventListener('click', function(){
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.card[data-name]'));
+      if(!cards.length) return;
+      var pick = cards[Math.floor(Math.random() * cards.length)];
+      pick.scrollIntoView({behavior:'smooth', block:'center'});
+      pick.classList.remove('flash');
+      void pick.offsetWidth;
+      pick.classList.add('flash');
+      try{ thwip(); }catch(e){}
+    });
+  }
+
+  // browser tab title easter egg
+  var realTitle = document.title;
+  document.addEventListener('visibilitychange', function(){
+    document.title = document.hidden ? "come back... 👀" : realTitle;
+  });
+
+  // pixel mascot speech bubble
+  var mascotLines = [
+    "i live in the walls now",
+    "did you check the morgue?",
+    "hit randomize, i dare you",
+    "this whole site was a mistake and i love it",
+    "specimen #09 is classified",
+    "shipping code at 2am builds character"
+  ];
+  var mascotWrap = document.getElementById('mascotWrap');
+  var mascotBubble = document.getElementById('mascotBubble');
+  var bubbleTimer;
+  mascotWrap.addEventListener('click', function(){
+    try{ thwip(); }catch(e){}
+    mascotBubble.textContent = mascotLines[Math.floor(Math.random()*mascotLines.length)];
+    mascotBubble.classList.add('show');
+    clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(function(){ mascotBubble.classList.remove('show'); }, 2600);
+  });
+
+  // onomatopoeia hover bursts on hallway cards
+  var words = ['POW!','ZAP!','BAM!','WHOA!','YEET!','OOF!'];
+  var colors = ['#c0392b','#0a6b62','#2f5fa8','#b6821f'];
+  document.querySelectorAll('#hallway .card').forEach(function(c){
+    c.addEventListener('mouseenter', function(e){
+      if(c.id === 'secretCard') return;
+      var el = document.createElement('div');
+      el.className = 'burstword';
+      el.textContent = words[Math.floor(Math.random()*words.length)];
+      el.style.color = colors[Math.floor(Math.random()*colors.length)];
+      var r = c.getBoundingClientRect();
+      el.style.left = (r.left + r.width/2 - 20) + 'px';
+      el.style.top = (r.top - 10) + 'px';
+      document.body.appendChild(el);
+      setTimeout(function(){ el.remove(); }, 700);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
