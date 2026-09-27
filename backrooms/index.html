@@ -163,6 +163,13 @@
       <div class="tags"><span>Chrome MV3</span><span>Idle Detection</span></div>
       <div class="stamp">ALIVE</div>
     </div>
+        <div class="card" data-name="Unghost">
+      <div class="spec">ISSUE #05</div>
+      <b>Unghost</b>
+      <p>an app that helps users manage their digital presence by removing ghost followers and inactive accounts.</p>
+      <div class="tags"><span>Chrome MV3</span><span>Social Media</span></div>
+      <div class="stamp">ALIVE</div>
+    </div>
     <div class="card secret" id="secretCard">
       <div class="spec">ISSUE #??</div>
       <b>???</b>
@@ -179,10 +186,10 @@
   <div class="chapter"><span class="chnum">CHAPTER 2</span><h2>CURRENTLY COOKING</h2></div>
   <div class="panelbox">
   <div class="grid">
-    <div class="card dotted" data-name="P-Tracker">
+    <div class="card dotted" data-name="Semicircle">
       <div class="tape"></div>
       <div class="spec">specimen #07</div>
-      <b>P-Tracker</b>
+      <b>Semicircle</b>
       <p>a native period-tracking app, still being built — local-first, no cloud.</p>
       <div class="tags"><span>Kotlin</span><span>Jetpack Compose</span><span>Material 3</span></div>
       <div class="stamp cooking">COOKING</div>
@@ -332,59 +339,66 @@
   var projectData = {
     "Serein Stats": {
       status:"alive", stampText:"ALIVE",
-      desc:"A screen-time analytics companion for Android — five tabs of usage breakdowns and a handful of color schemes, built on top of UsageStatsManager instead of squinting at raw system numbers.",
-      why:"[add your own story here: what made you build this instead of using an existing screen-time app?]",
+      desc:"A screen-time analytics companion for Android , five tabs of usage breakdowns and a handful of color schemes, built on top of UsageStatsManager instead of squinting at raw system numbers.",
+      why:"Im a big stat nerd and i wanted a more detailed view of my screen-time than existing apps provided.",
       tags:["Kotlin","UsageStatsManager","GitHub Actions CI/CD"],
-      site:"#", github:"#"
+      site:"https://arnav-deoghare.github.io/serein/", github:"https://github.com/Arnav-Deoghare/Serein-stats"
     },
     "Zen Launcher": {
       status:"alive", stampText:"ALIVE",
       desc:"A minimal Android home screen — app allowlisting, texture-based themes, and notification filtering, for a phone that doesn't fight for your attention.",
-      why:"[add your own story here: what pushed you to build your own launcher?]",
+      why:"I wanted to try and see if a minimal launcher could improve my phone experience",
       tags:["Kotlin","Jetpack Compose"],
-      site:"#", github:"#"
+      site:"#", github:"https://github.com/Arnav-Deoghare/Serein-OS"
     },
     "LiftLog": {
       status:"onhold", stampText:"ON HOLD",
       desc:"A local-first gym photo tracker built in React Native — log lifts with photos, no account, no cloud sync, sideloaded straight to your phone.",
-      why:"[add your own story here: what gym-tracking itch wasn't being scratched by other apps, and what put this on ice?]",
+      why:"I wanted to track my progress in the gym by taking the same pic each time.",
       tags:["React Native","Expo","EAS Build"],
       site:"#", github:"#"
     },
     "TrustPulse": {
       status:"alive", stampText:"ALIVE",
       desc:"A Chrome extension that scores how trustworthy a webpage looks, surfaced through a Shadow DOM badge with an accordion of the issues it found.",
-      why:"[add your own story here: what made you want a trust score baked into your browser?]",
+      why:"Wanted to experiment with chrome extension development",
       tags:["Chrome MV3","Shadow DOM"],
-      site:"#", github:"#"
+      site:"https://chromewebstore.google.com/detail/trustpulse/nafoiomkoedgnooadcnbckaaiomanhba?authuser=0&hl=en-GB", github:"https://github.com/Arnav-Deoghare/TrustPulse"
     },
     "Driftlog": {
       status:"alive", stampText:"ALIVE",
       desc:"A browsing-time tracker Chrome extension with idle detection and a heatmap history view — published to the Chrome Web Store, optional host permissions.",
-      why:"[add your own story here: what made you want to actually see your scroll time instead of guessing?]",
+      why:"Same reason as Serein stats, needed this for more detailed view of screen usage",
       tags:["Chrome MV3","Idle Detection"],
-      site:"#", github:"#"
+      site:"https://chromewebstore.google.com/detail/driftlog/gffdkelhomngjgcogbcplkhbcmfakmhc?authuser=0&hl=en-GB", github:"https://github.com/Arnav-Deoghare/Driftlog"
+    },
+    "Unghost": {
+      status:"alive", stampText:"ALIVE",
+      desc:"A app that helps users manage their digital presence by removing ghost followers and inactive accounts.",
+      why:"Wanted to see who was ghosting me on social media",
+      tags:["Chrome MV3","Social Media"],
+      site:"https://unghost-journey.vercel.app/", github:"https://github.com/Arnav-Deoghare/unghost-journey"
     },
     "Finance Tracker": {
       status:"onhold", stampText:"ON HOLD",
       desc:"A single-file HTML app seeded with my own Jan–July 2026 spending — auto-categorization, Chart.js dashboards, and XLSX import for deeper analytics.",
-      why:"[add your own story here: what was wrong with the budgeting apps you tried first, and what put this on hold?]",
+      why:"Wanted my own budgeting app so i get more stats of my own spendings",
       tags:["HTML/JS","Chart.js"],
-      site:"#", github:"#"
+    //   site:"#", github:"#"
     },
-    "P-Tracker": {
+    "Semicircle": {
       status:"cooking", stampText:"COOKING",
       desc:"A native Android period-tracking app — Kotlin/Jetpack Compose, Material 3 UI, fully local-first with no cloud dependency.",
-      why:"[add your own story here: who's it for, and why local-first mattered to you?]",
+      why:"made for a friend",
       tags:["Kotlin","Jetpack Compose","Material 3"],
-      site:"#", github:"#"
+    //   site:"#", github:"#"
     },
     "Lumina": {
       status:"dead", stampText:"DEAD",
       desc:"A browser-based photo manager, deployed to Vercel — meant to give a lightweight way to browse and organize photos without a heavyweight desktop app.",
       why:"Hit a hard wall on Google Photos OAuth scope verification requirements and couldn't get past it — officially retired to the morgue.",
       tags:["HTML/JS","Vercel"],
-      site:"#", github:"#"
+      site:"#", github:"https://github.com/Arnav-Deoghare/Lumina"
     }
   };
 
