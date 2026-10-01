@@ -3,7 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Backrooms — Arnav Deoghare</title>
+<meta name="description" content="Arnav Deoghare's comic-book backroom: side projects, experiments, stats, and ways to get in touch.">
+<meta name="theme-color" content="#f4c84a">
+<link rel="canonical" href="https://arnav-deoghare.github.io/back/backrooms.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Backrooms — Arnav">
+<meta property="og:description" content="A comic-book field guide to things I built for fun, curiosity, or because I couldn't sleep.">
+<meta property="og:url" content="https://arnav-deoghare.github.io/back/backrooms.html">
+<meta property="og:image" content="https://arnav-deoghare.github.io/back/social-preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Backrooms portfolio cover by Arnav Deoghare">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Backrooms — Arnav">
+<meta name="twitter:description" content="A comic-book field guide to things I built for fun, curiosity, or because I couldn't sleep.">
+<meta name="twitter:image" content="https://arnav-deoghare.github.io/back/social-preview.png">
+<title>Backrooms — Arnav</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='3' y='3' width='58' height='58' rx='10' fill='%23f4c84a' stroke='%23272018' stroke-width='6'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Arial,sans-serif' font-size='30' font-weight='900' letter-spacing='-2' fill='%23fffaf0' stroke='%23272018' stroke-width='2' paint-order='stroke'%3EAD%3C/text%3E%3Ccircle cx='53' cy='13' r='4' fill='%23d95f4d' stroke='%23272018' stroke-width='2'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Press+Start+2P&family=Bangers&display=swap" rel="stylesheet">
 <style>
   :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);}
@@ -120,6 +139,7 @@
   .halftone{background-image:radial-gradient(#513d2e 1px,transparent 1.2px);background-size:12px 12px;opacity:.045;}
   main{max-width:1000px;padding-top:48px;}
   .byline{font-size:11px;letter-spacing:.16em;margin-bottom:14px;}
+  main > .byline{font-size:14px;letter-spacing:.14em;margin-bottom:16px;}
   .speedlines{inset:0;}
   .titlebar{background:var(--paper);border-width:4px;box-shadow:8px 8px 0 var(--ink);padding:24px 20px;}
   h1 span{transition:transform .2s ease;text-shadow:2px 2px 0 rgba(39,32,24,.08);}
@@ -133,6 +153,10 @@
   .panelbox{background:rgba(255,250,240,.58);border-width:3px;padding:24px;}
   .grid{gap:24px;}
   .card{background:var(--paper);border-width:2px;border-radius:5px;box-shadow:5px 5px 0 rgba(39,32,24,.88);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;}
+  .card.alive-card{background:linear-gradient(rgba(63,181,111,.08),rgba(63,181,111,.08)),var(--paper);}
+  .card.cooking-card{background:linear-gradient(rgba(244,200,74,.13),rgba(244,200,74,.13)),var(--paper);}
+  .card.onhold-card{background:linear-gradient(rgba(90,107,122,.1),rgba(90,107,122,.1)),var(--paper);}
+  .card.dead-card{background:linear-gradient(rgba(192,57,43,.09),rgba(192,57,43,.09)),var(--paper);}
   .grid .card:hover{transform:translateY(-6px) rotate(0deg);box-shadow:7px 10px 0 rgba(39,32,24,.78);border-color:var(--teal);}
   .grid .card:focus-visible,.shufflebtn:focus-visible,.social:focus-visible,.modal button:focus-visible,.modal-wide button:focus-visible,.modal-wide a:focus-visible{outline:3px solid #2f5fa8;outline-offset:4px;}
   .spec{letter-spacing:.08em;color:#675a49;opacity:1;}
@@ -190,6 +214,7 @@
   .tbc{display:block;width:fit-content;margin:48px 0 0 auto;background:var(--sun);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);font-family:'Bangers',cursive;font-size:24px;letter-spacing:.04em;padding:6px 18px;transform:rotate(1.5deg);}
   .theend{font-family:'Bangers',cursive;font-size:28px;letter-spacing:.03em;}
   .theend small{display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;opacity:.65;}
+  .closing-panel{margin:24px 0 0;border-width:2px;box-shadow:4px 4px 0 rgba(39,32,24,.88);}
 
   /* ---------- contact ---------- */
   #contact{scroll-margin-top:24px;}
@@ -203,6 +228,12 @@
   .contact-row{display:flex;gap:8px;}
   .contact-chip{flex:1;min-width:0;display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--ink);border-radius:5px;box-shadow:3px 3px 0 var(--ink);padding:10px 12px;text-decoration:none;color:var(--ink);transition:transform .18s ease,box-shadow .18s ease;}
   .contact-chip:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
+  .contact-chip[hidden],.copy-btn[hidden],.gift-reveal[hidden]{display:none;}
+  .gift-reveal{flex:1;min-width:0;display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:2px solid var(--ink);border-radius:5px;box-shadow:3px 3px 0 var(--ink);padding:10px 12px;color:var(--ink);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;}
+  .gift-reveal:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);}
+  .gift-reveal .ci{flex:none;width:38px;height:38px;display:grid;place-items:center;border:2px solid var(--ink);border-radius:5px;background:var(--sun);font-size:21px;}
+  .gift-reveal small{display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;color:#675a49;}
+  .gift-reveal strong{display:block;font-size:13px;line-height:1.35;}
   .contact-chip .ci{flex:none;width:38px;height:38px;display:grid;place-items:center;border:2px solid var(--ink);border-radius:50%;background:var(--sun);font-size:17px;}
   .contact-chip:nth-child(1) .ci{background:#ffd1c7;}
   .contact-chip small{display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;color:#675a49;}
@@ -229,7 +260,7 @@
   .send-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink);}
   .send-btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink);}
   .send-btn:disabled{opacity:.6;cursor:wait;}
-  .send-btn:focus-visible,.copy-btn:focus-visible,.contact-chip:focus-visible,.byline a:focus-visible{outline:3px solid #2f5fa8;outline-offset:3px;}
+  .send-btn:focus-visible,.copy-btn:focus-visible,.contact-chip:focus-visible,.gift-reveal:focus-visible,.byline a:focus-visible{outline:3px solid #2f5fa8;outline-offset:3px;}
   .form-status{font-family:'Caveat',cursive;font-size:21px;min-height:28px;margin:10px 0 0;text-align:center;}
   .form-status.error{color:#b13a28;}
 
@@ -282,8 +313,12 @@
   .shelf{background:var(--paper);border:2px solid var(--ink);border-radius:5px;box-shadow:5px 5px 0 var(--ink);padding:18px;position:relative;}
   .shelf.wide{grid-column:1/-1;}
   .shelf h3{font-family:'Bangers',cursive;font-weight:400;font-size:25px;letter-spacing:.03em;margin:0 0 10px;}
+  .quest-stack{display:grid;gap:14px;}
+  .quest-group + .quest-group{border-top:2px dashed rgba(39,32,24,.35);padding-top:14px;}
+  .quest-label{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.1em;color:#675a49;margin:0 0 7px;}
   .book{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed rgba(39,32,24,.35);}
   .book:last-child{border-bottom:none;}
+  .quest-group .book,.quest-group .quest{padding:0;border-bottom:none;}
   .spine{flex:none;width:14px;height:50px;border:2px solid var(--ink);border-radius:2px;background:var(--coral);box-shadow:2px 2px 0 var(--ink);}
   .book:nth-child(2) .spine{background:var(--teal);}
   .book:nth-child(3) .spine{background:#2f5fa8;}
@@ -292,24 +327,33 @@
   .book small,.quest small{font-family:'Space Mono',monospace;font-size:10px;color:#675a49;}
   .progress{height:9px;border:2px solid var(--ink);border-radius:99px;background:#fff;margin-top:6px;overflow:hidden;}
   .progress i{display:block;height:100%;width:var(--p);background:repeating-linear-gradient(45deg,var(--sun) 0 6px,#f0b429 6px 12px);}
-  .vinyl{position:absolute;top:-16px;right:-12px;width:60px;height:60px;border-radius:50%;background:repeating-radial-gradient(#272018 0 2px,#3d342a 2px 4px);border:2px solid var(--ink);animation:spin 4s linear infinite;}
-  .vinyl::after{content:'';position:absolute;inset:20px;border-radius:50%;background:var(--coral);border:2px solid var(--ink);}
   @keyframes spin{to{transform:rotate(360deg);}}
   .track{display:flex;align-items:center;gap:10px;padding:8px 10px;border:2px solid var(--ink);border-radius:5px;background:#fff;margin-bottom:8px;text-decoration:none;color:var(--ink);transition:transform .15s ease,background-color .15s ease;}
   .track:last-child{margin-bottom:0;}
   .track:hover{transform:translateX(4px);background:#fff4c7;}
+  .track:focus-visible{outline:3px solid #2f5fa8;outline-offset:3px;}
   .track .num{font-family:'Press Start 2P',monospace;font-size:9px;}
+  .track-disc{flex:none;width:28px;height:28px;border:2px solid var(--ink);border-radius:50%;background:repeating-radial-gradient(circle at center,#272018 0 2px,#4e4234 2px 4px);position:relative;animation:spin 2.8s linear infinite;}
+  .track-disc::after{content:'';position:absolute;inset:8px;border:2px solid var(--ink);border-radius:50%;background:var(--coral);}
+  .track:nth-of-type(3n) .track-disc::after{background:var(--teal);}
+  .track:nth-of-type(3n+1) .track-disc::after{background:#2f5fa8;}
+  .music-paused .track-disc,.mascot-wrap.motion-paused svg{animation-play-state:paused;}
   .track b{display:block;font-size:14px;}
   .track small{font-family:'Space Mono',monospace;font-size:10px;color:#675a49;}
   .eq{margin-left:auto;display:flex;gap:2px;align-items:flex-end;height:16px;flex:none;}
-  .eq i{width:3px;height:4px;background:var(--teal);animation:eq .9s ease-in-out infinite;}
-  .eq i:nth-child(2){animation-delay:.2s;}
-  .eq i:nth-child(3){animation-delay:.45s;}
-  .eq i:nth-child(4){animation-delay:.1s;}
+  .eq i{width:3px;height:4px;background:var(--teal);}
+  .eq i:nth-child(2){height:10px;}
+  .eq i:nth-child(3){height:7px;}
+  .eq i:nth-child(4){height:13px;}
+  .track:hover .eq i,.track:focus-visible .eq i{animation:eq .9s ease-in-out infinite;}
+  .track:hover .eq i:nth-child(2),.track:focus-visible .eq i:nth-child(2){animation-delay:.2s;}
+  .track:hover .eq i:nth-child(3),.track:focus-visible .eq i:nth-child(3){animation-delay:.45s;}
+  .track:hover .eq i:nth-child(4),.track:focus-visible .eq i:nth-child(4){animation-delay:.1s;}
   @keyframes eq{50%{height:16px;}}
   .quest{padding:10px 0;border-bottom:1px dashed rgba(39,32,24,.35);}
   .quest:last-child{border-bottom:none;}
   .quest-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;}
+  .progress-label{display:block;margin-top:7px;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.06em;color:#675a49;}
   .qstatus{flex:none;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;border:2px solid currentColor;border-radius:3px;padding:1px 6px;transform:rotate(-3deg);}
   .qstatus.active{color:#b6821f;}
   .qstatus.done{color:#1f7a4a;}
@@ -356,13 +400,12 @@
 
   /* ---------- night shift (konami code) ---------- */
   html.night{filter:invert(1) hue-rotate(180deg);}
-  html.night .vinyl{filter:invert(1) hue-rotate(180deg);}
   .night-badge{display:none;position:fixed;top:14px;left:14px;z-index:45;align-items:center;gap:8px;background:var(--paper);border:2px solid var(--ink);border-radius:99px;box-shadow:3px 3px 0 var(--ink);padding:6px 12px;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;color:var(--ink);cursor:pointer;}
   html.night .night-badge{display:inline-flex;}
   .konami-hint{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;opacity:.35;margin-top:4px;}
 
   /* ---------- issue index + contribution graph ---------- */
-  .issue-index{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:28px 0 8px;padding:12px;background:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 rgba(39,32,24,.25);}
+  .issue-index{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:28px 0 8px;padding:12px;background:var(--ink);border:3px solid var(--ink);box-shadow:5px 5px 0 rgba(39,32,24,.25);}
   .issue-index a{display:flex;flex-direction:column;justify-content:center;min-height:58px;background:var(--paper);border:2px solid var(--ink);padding:8px;text-decoration:none;text-align:center;transition:transform .18s ease,background-color .18s ease;}
   .issue-index a:nth-child(2n){background:#fff1c2;}
   .issue-index a:nth-child(3n){background:#dff3e4;}
@@ -395,13 +438,16 @@
     .sfx span{font-size:26px;padding:24px 36px;}
     .sfx-strip{gap:8px;}
     .contact-panel{padding:18px;}
+    .contact-row{flex-wrap:wrap;}
+    .contact-row .contact-chip,.contact-row .gift-reveal{flex-basis:100%;}
+    .contact-row .copy-btn{width:100%;min-height:40px;padding:8px 12px;}
     .fm-head b{font-size:26px;}
     .branch{grid-template-columns:1fr;gap:10px;}
     .branch-name{justify-self:start;}
     .nodes{gap:8px;}
     .link{display:none;}
     .stat .big{font-size:46px;}
-    .issue-index{grid-template-columns:repeat(2,1fr);}
+    .issue-index{grid-template-columns:1fr;}
     .github-calendar-head{align-items:start;flex-direction:column;padding-right:54px;}
   }
   @media(prefers-reduced-motion:reduce){
@@ -413,11 +459,11 @@
 <div class="halftone"></div>
 <main>
 
-  <div class="byline">ARNAV DEOGHARE · <a href="#contact">✉ say hi</a> · <a href="Arnav_Deoghare.pdf" download>⬇ download résumé</a></div>
+  <div class="byline">ARNAV DEOGHARE · <a href="#contact"><span aria-hidden="true">✉</span> say hi</a> · <a href="Arnav_Deoghare.pdf" download><span aria-hidden="true">⬇</span> download résumé</a></div>
   <div class="titlewrap">
     <div class="speedlines"></div>
     <div class="titlebar">
-      <div class="issue-box" aria-hidden="true"><b>No. 1</b>SEPT '26<br>FREE!</div>
+      <div class="issue-box" aria-hidden="true"><b>No. 1</b>OCT '26<br>FREE!</div>
       <div class="sfx cover-burst" aria-hidden="true"><span>NEW!</span></div>
       <div class="byline">A FIELD GUIDE TO THINGS I MADE FOR FUN</div>
       <h1><span>B</span><span>A</span><span>C</span><span>K</span><span>R</span><span>O</span><span>O</span><span>M</span><span>S</span></h1>
@@ -432,7 +478,7 @@
     <a href="#work"><small>ISSUE 01</small><b>THE WORK</b></a>
     <a href="#proof"><small>ISSUE 02</small><b>THE RECEIPTS</b></a>
     <a href="#life"><small>ISSUE 03</small><b>OFF DUTY</b></a>
-    <a href="#open"><small>ISSUE 04</small><b>SIDE QUESTS</b></a>
+    <a href="#open"><small>ISSUE 04</small><b>OPEN FOR BUSINESS</b></a>
     <a href="#contact"><small>ISSUE 05</small><b>SEND A SIGNAL</b></a>
   </nav>
 
@@ -440,35 +486,35 @@
   <div class="chapter" id="work"><span class="chnum">CHAPTER 1</span><h2>THE HALLWAY</h2></div>
   <div class="panelbox">
   <div class="grid" id="hallway">
-    <div class="card" data-name="Serein Stats">
+    <div class="card alive-card" data-name="Serein Stats">
       <div class="spec">ISSUE #01</div>
       <b>Serein Stats</b>
       <p>screen time analytics you'll actually open — five tabs, several color schemes.</p>
       <div class="tags"><span>Kotlin</span><span>UsageStatsManager</span><span>GitHub Actions</span></div>
       <div class="stamp">ALIVE</div>
     </div>
-    <div class="card" data-name="Zen Launcher">
+    <div class="card alive-card" data-name="Zen Launcher">
       <div class="spec">ISSUE #02</div>
       <b>Zen Launcher</b>
       <p>a minimal Android home screen — allowlisting, texture themes, notification filtering.</p>
       <div class="tags"><span>Kotlin</span><span>Jetpack Compose</span></div>
       <div class="stamp">ALIVE</div>
     </div>
-    <div class="card" data-name="TrustPulse">
+    <div class="card alive-card" data-name="TrustPulse">
       <div class="spec">ISSUE #03</div>
       <b>TrustPulse</b>
       <p>a Chrome extension that scores how trustworthy a webpage is.</p>
       <div class="tags"><span>Chrome MV3</span><span>Shadow DOM</span></div>
       <div class="stamp">ALIVE</div>
     </div>
-    <div class="card" data-name="Driftlog">
+    <div class="card alive-card" data-name="Driftlog">
       <div class="spec">ISSUE #04</div>
       <b>Driftlog</b>
       <p>tracks how long you scrolled instead of doing anything useful.</p>
       <div class="tags"><span>Chrome MV3</span><span>Idle Detection</span></div>
       <div class="stamp">ALIVE</div>
     </div>
-        <div class="card" data-name="Unghost">
+        <div class="card alive-card" data-name="Unghost">
       <div class="spec">ISSUE #05</div>
       <b>Unghost</b>
       <p>an app that helps users manage their digital presence by removing ghost followers and inactive accounts.</p>
@@ -492,7 +538,7 @@
   <div class="chapter"><span class="chnum">CHAPTER 2</span><h2>CURRENTLY COOKING</h2></div>
   <div class="panelbox">
   <div class="grid">
-    <div class="card dotted" data-name="Semicircle">
+    <div class="card dotted cooking-card" data-name="Semicircle">
       <div class="tape"></div>
       <div class="spec">specimen #07</div>
       <b>Semicircle</b>
@@ -531,7 +577,7 @@
   <div class="chapter"><span class="chnum">CHAPTER 4</span><h2>THE MORGUE</h2></div>
   <div class="panelbox">
   <div class="grid">
-    <div class="card dotted tombstone" data-name="Lumina">
+    <div class="card dotted tombstone dead-card" data-name="Lumina">
       <div class="tape"></div>
       <svg class="tombstone-icon" viewBox="0 0 36 42">
         <path d="M5 40 L5 17 Q4 4 18 4 Q32 4 31 17 L31 40 Z" fill="#fdf6e3" stroke="#181206" stroke-width="2.2" stroke-linejoin="round"/>
@@ -589,7 +635,7 @@
       <div class="contrib-scroll">
         <img class="contribution-snapshot" src="github-contributions.png" alt="Arnav Deoghare's GitHub contribution calendar snapshot" width="800" height="190" loading="lazy">
       </div>
-      <small class="calendar-fallback">Snapshot updated Sept 2026 · live version at <a href="https://github.com/Arnav-Deoghare" target="_blank" rel="noopener">github.com/Arnav-Deoghare</a></small>
+      <small class="calendar-fallback">Snapshot updated Oct 2026 · live version at <a href="https://github.com/Arnav-Deoghare" target="_blank" rel="noopener">github.com/Arnav-Deoghare</a></small>
     </div>
   </div>
 
@@ -610,26 +656,29 @@
   <div class="chapter" id="life"><span class="chnum">CHAPTER 7</span><h2>OFF THE CLOCK</h2></div>
   <div class="panelbox">
     <!-- ✏️ EDIT ME: swap the [placeholders] below for your real books, songs and games. -->
-    <p class="updated">CURRENTLY · LAST UPDATED SEPT 2026</p>
+    <p class="updated">CURRENTLY · LAST UPDATED OCT 2026</p>
     <div class="shelf-grid">
       <div class="shelf">
-        <h3>📚 NOW READING</h3>
-        <div class="book"><span class="spine"></span><div><b>Red Rising</b><small>Pierce Brown · in progress</small><div class="progress"><i style="--p:45%"></i></div></div></div>
+        <h3><span aria-hidden="true">📚 + 🎮</span> CURRENT QUESTS</h3>
+        <div class="quest-stack">
+          <section class="quest-group">
+            <p class="quest-label">NOW READING</p>
+            <div class="book"><span class="spine"></span><div><b>Red Rising</b><small>Pierce Brown · in progress</small><div class="progress"><i style="--p:45%"></i></div></div></div>
+          </section>
+          <section class="quest-group">
+            <p class="quest-label">SIDE QUEST</p>
+            <div class="quest"><div class="quest-top"><b>Bloodborne</b><span class="qstatus abandoned">RAGE QUIT</span></div><small>PS4 · the boss won</small><span class="progress-label">25% BEFORE DEFEAT</span><div class="progress" role="progressbar" aria-label="Bloodborne progress before defeat" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25"><i style="--p:25%"></i></div></div>
+          </section>
+        </div>
       </div>
 
-      <div class="shelf">
-        <span class="vinyl" aria-hidden="true"></span>
-        <h3>🎧 ON REPEAT</h3>
-        <a class="track" href="https://open.spotify.com/search/Loser%20Tame%20Impala" target="_blank" rel="noopener"><span class="num">01</span><span><b>Loser</b><small>Tame Impala</small></span><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></a>
-        <a class="track" href="https://open.spotify.com/search/How%20Music%20Works%20Marcin" target="_blank" rel="noopener"><span class="num">02</span><span><b>How Music Works</b><small>Marcin</small></span></a>
-        <a class="track" href="https://open.spotify.com/search/Oh%20Lord%20Foxy%20Shazam" target="_blank" rel="noopener"><span class="num">03</span><span><b>Oh Lord</b><small>Foxy Shazam</small></span></a>
-        <a class="track" href="https://open.spotify.com/search/Play%20the%20Game%20Queen" target="_blank" rel="noopener"><span class="num">04</span><span><b>Play the Game</b><small>Queen</small></span></a>
-        <a class="track" href="https://open.spotify.com/search/Heart%20Shaped%20Box%20Nirvana" target="_blank" rel="noopener"><span class="num">05</span><span><b>Heart-Shaped Box</b><small>Nirvana</small></span></a>
-      </div>
-
-      <div class="shelf">
-        <h3>🎮 SIDE QUESTS</h3>
-        <div class="quest"><div class="quest-top"><b>Bloodborne</b><span class="qstatus abandoned">RAGE QUIT</span></div><small>PS4 · the boss won</small><div class="progress"><i style="--p:25%"></i></div></div>
+      <div class="shelf" id="musicShelf">
+        <h3><span aria-hidden="true">🎧</span> ON REPEAT</h3>
+        <a class="track" href="https://open.spotify.com/track/3RmFPuTTAjSQ2pbEd2j9oA" target="_blank" rel="noopener"><span class="num">01</span><span class="track-disc" aria-hidden="true"></span><span><b>Loser</b><small>Tame Impala</small></span><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></a>
+        <a class="track" href="https://open.spotify.com/track/4k8CFBCdBkVAP4OHRT2ULu" target="_blank" rel="noopener"><span class="num">02</span><span class="track-disc" aria-hidden="true"></span><span><b>How Music Works</b><small>Marcin</small></span></a>
+        <a class="track" href="https://open.spotify.com/track/3Bw5gtAfJQpNfUmdesHbZo" target="_blank" rel="noopener"><span class="num">03</span><span class="track-disc" aria-hidden="true"></span><span><b>Oh Lord</b><small>Foxy Shazam</small></span></a>
+        <a class="track" href="https://open.spotify.com/track/6eKWWkdvDLx7NgXaR8XccJ" target="_blank" rel="noopener"><span class="num">04</span><span class="track-disc" aria-hidden="true"></span><span><b>Play the Game</b><small>Queen</small></span></a>
+        <a class="track" href="https://open.spotify.com/track/6QewNVIDKdSl8Y3ycuHIei" target="_blank" rel="noopener"><span class="num">05</span><span class="track-disc" aria-hidden="true"></span><span><b>Heart-Shaped Box</b><small>Nirvana</small></span></a>
       </div>
     </div>
   </div>
@@ -652,21 +701,28 @@
   <div class="contact-grid">
     <div class="contact-panel hero-panel">
       <p class="speech">psst! got an idea, a bug report, or a job that needs building? my inbox is open.</p>
-      <!-- Placeholders: edit CONTACT at the top of the <script> below to set your real email and phone. -->
       <div class="contact-list">
         <div class="contact-row">
-          <a class="contact-chip" data-contact-link="email" href="mailto:your.email@example.com">
+          <button class="gift-reveal" type="button" data-reveal-contact="email" aria-controls="emailContact">
+            <span class="ci" aria-hidden="true">🎁</span>
+            <span><small>EMAIL</small><strong>SEALED GIFT · TAP TO UNWRAP</strong></span>
+          </button>
+          <a class="contact-chip" id="emailContact" data-contact-link="email" data-contact-text="email" hidden>
             <span class="ci" aria-hidden="true">✉</span>
-            <span><small>EMAIL</small><strong data-contact-text="email">your.email@example.com</strong></span>
+            <span><small>EMAIL</small><strong></strong></span>
           </a>
-          <button class="copy-btn" type="button" data-copy="email">COPY</button>
+          <button class="copy-btn" type="button" data-copy="email" hidden>COPY</button>
         </div>
         <div class="contact-row">
-          <a class="contact-chip" data-contact-link="phone" href="tel:+910000000000">
+          <button class="gift-reveal" type="button" data-reveal-contact="phone" aria-controls="phoneContact">
+            <span class="ci" aria-hidden="true">🎁</span>
+            <span><small>PHONE</small><strong>SEALED GIFT · TAP TO UNWRAP</strong></span>
+          </button>
+          <a class="contact-chip" id="phoneContact" data-contact-link="phone" data-contact-text="phone" hidden>
             <span class="ci" aria-hidden="true">☎</span>
-            <span><small>PHONE</small><strong data-contact-text="phone">+91 00000 00000</strong></span>
+            <span><small>PHONE</small><strong></strong></span>
           </a>
-          <button class="copy-btn" type="button" data-copy="phone">COPY</button>
+          <button class="copy-btn" type="button" data-copy="phone" hidden>COPY</button>
         </div>
         <div class="contact-row">
           <a class="contact-chip" href="https://www.linkedin.com/in/arnav-deoghare/" target="_blank" rel="noopener">
@@ -693,29 +749,28 @@
       <label class="field"><span>YOUR EMAIL</span><input type="email" name="email" autocomplete="email" required maxlength="120" placeholder="you@somewhere.com"></label>
       <label class="field"><span>YOUR MESSAGE</span><textarea name="message" required maxlength="2000" placeholder="dear arnav, i found your backrooms and..."></textarea></label>
       <label class="hp" aria-hidden="true">leave this empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label>
-      <button class="send-btn" type="submit">SEND IT! ✉</button>
+      <button class="send-btn" type="submit">SEND IT! <span aria-hidden="true">✉</span></button>
       <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
     </form>
   </div>
-  </div>
-
-  <div class="tbc">TO BE CONTINUED... ➜</div>
-
-  <footer>
-    <div class="theend">THE END...?<small>© ARNAV COMICS · NO GHOSTS WERE HARMED</small><div class="konami-hint" aria-hidden="true">↑ ↑ ↓ ↓ ← → ← → B A</div></div>
+  <footer class="closing-panel">
+    <div class="theend"><small>© ARNAV COMICS · NO GHOSTS WERE HARMED</small><div class="konami-hint" aria-hidden="true">↑ ↑ ↓ ↓ ← → ← → B A</div></div>
     <div class="socials">
-      <a class="social" href="https://arnav-deoghare.github.io" title="back to the real portfolio">🚪 EXIT</a>
-      <a class="social" href="#contact">✉ CONTACT</a>
+      <a class="social" href="https://arnav-deoghare.github.io" title="back to the real portfolio"><span aria-hidden="true">🚪</span> EXIT</a>
+      <a class="social" href="#contact"><span aria-hidden="true">✉</span> CONTACT</a>
       <a class="social" href="https://github.com/Arnav-Deoghare" target="_blank" rel="noopener">GITHUB</a>
       <a class="social" href="https://www.linkedin.com/in/arnav-deoghare/" target="_blank" rel="noopener">LINKEDIN</a>
     </div>
   </footer>
+  </div>
+
+  <div class="tbc">TO BE CONTINUED... ➜</div>
 
 </main>
 
-<button class="night-badge" id="nightBadge" type="button">🌙 NIGHT SHIFT · tap to wake up</button>
+<button class="night-badge" id="nightBadge" type="button"><span aria-hidden="true">🌙</span> NIGHT SHIFT · tap to wake up</button>
 
-<div class="modal-bg" id="modalBg">
+<div class="modal-bg" id="modalBg" aria-hidden="true">
   <div class="modal game-modal" role="dialog" aria-modal="true" aria-labelledby="secretModalTitle">
     <h3 id="secretModalTitle">you found it! GHOST CATCH</h3>
     <p class="game-intro">ghosts are leaking out of the vents. bonk as many as you can in 20 seconds.</p>
@@ -729,16 +784,16 @@
   </div>
 </div>
 
-<div class="modal-bg" id="projectModalBg">
+<div class="modal-bg" id="projectModalBg" aria-hidden="true">
   <div class="modal-wide" id="projectModalBody" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
-    <button class="mclose" id="projectModalClose">✕</button>
+    <button class="mclose" id="projectModalClose" type="button" aria-label="Close project details">✕</button>
     <!-- filled by JS -->
   </div>
 </div>
 
 <div class="mascot-wrap" id="mascotWrap">
-  <div class="mascot-bubble" id="mascotBubble"></div>
-  <svg viewBox="0 0 8 9" shape-rendering="crispEdges">
+  <div class="mascot-bubble" id="mascotBubble" role="status" aria-live="polite"></div>
+  <svg viewBox="0 0 8 9" shape-rendering="crispEdges" aria-hidden="true">
     <g fill="#fdf6e3" stroke="#181206" stroke-width="0.08">
       <rect x="2" y="0" width="4" height="1"/>
       <rect x="1" y="1" width="6" height="1"/>
@@ -764,8 +819,8 @@
   // formEndpoint: paste a Formspree (https://formspree.io) form URL like 'https://formspree.io/f/abcdwxyz'
   // to receive messages directly. Leave it empty and the form opens the visitor's email app instead.
   var CONTACT = {
-    email: 'your.email@example.com',
-    phone: '+91 00000 00000',
+    email: 'arnavdeoghare3@gmail.com',
+    phone: '+91 76662 18301',
     formEndpoint: ''
   };
 
@@ -775,7 +830,7 @@
   var GITHUB_SNAPSHOT = {
     commits:35,
     repos:9,
-    updated:'27 Sep 2026',
+    updated:'1 Oct 2026',
     days:{
       '2026-02-21':2,'2026-03-19':4,'2026-03-21':1,'2026-03-29':2,
       '2026-04-19':1,'2026-05-18':1,'2026-05-23':1,'2026-05-25':1,
@@ -879,8 +934,14 @@
   var projectModalBg = document.getElementById('projectModalBg');
   var projectModalBody = document.getElementById('projectModalBody');
   var lastModalTrigger;
+  function getFocusable(dialog){
+    return Array.prototype.slice.call(dialog.querySelectorAll(
+      'a[href],button:not([disabled]),input:not([disabled]),textarea:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])'
+    )).filter(function(el){ return el.offsetParent !== null; });
+  }
   function closeModal(modal){
     modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
     if(modal === modalBg) stopGame();
     if(lastModalTrigger){
       lastModalTrigger.focus();
@@ -891,7 +952,7 @@
     var d = projectData[name];
     if(!d) return;
     projectModalBody.innerHTML =
-      '<button class="mclose" id="projectModalClose">✕</button>' +
+      '<button class="mclose" id="projectModalClose" type="button" aria-label="Close project details">✕</button>' +
       '<div class="mspec">FULL FILE</div>' +
       '<h3 id="projectModalTitle">' + name + '</h3>' +
       '<div class="mstamp' + (d.status==='cooking'?' cooking':d.status==='onhold'?' onhold':d.status==='dead'?' dead':'') + '">' + d.stampText + '</div>' +
@@ -899,11 +960,12 @@
       '<p>' + d.desc + '</p>' +
       '<div class="mlabel">' + (d.status==='dead' ? 'WHY IT DIED' : 'WHY IT STARTED') + '</div>' +
       '<p>' + d.why + '</p>' +
-      '<div class="mlinks"><a href="' + d.site + '" target="_blank" rel="noopener">🔗 SITE</a><a href="' + d.github + '" target="_blank" rel="noopener">🐙 GITHUB</a></div>';
+      '<div class="mlinks"><a href="' + d.site + '" target="_blank" rel="noopener"><span aria-hidden="true">🔗</span> SITE</a><a href="' + d.github + '" target="_blank" rel="noopener"><span aria-hidden="true">🐙</span> GITHUB</a></div>';
     document.getElementById('projectModalClose').addEventListener('click', function(){
       closeModal(projectModalBg);
     });
     projectModalBg.classList.add('open');
+    projectModalBg.setAttribute('aria-hidden','false');
     document.getElementById('projectModalClose').focus();
   }
   document.querySelectorAll('.card[data-name]').forEach(function(c){
@@ -935,6 +997,7 @@
       try{ thwip(); }catch(e){}
       lastModalTrigger = secret;
       modalBg.classList.add('open');
+      modalBg.setAttribute('aria-hidden','false');
       document.getElementById('gStart').focus();
     });
   }
@@ -945,9 +1008,27 @@
     if(e.target === modalBg) closeModal(modalBg);
   });
   document.addEventListener('keydown', function(e){
+    var activeModal = projectModalBg.classList.contains('open') ? projectModalBg :
+      modalBg.classList.contains('open') ? modalBg : null;
     if(e.key === 'Escape'){
       if(projectModalBg.classList.contains('open')) closeModal(projectModalBg);
       if(modalBg.classList.contains('open')) closeModal(modalBg);
+      return;
+    }
+    if(e.key === 'Tab' && activeModal){
+      var focusable = getFocusable(activeModal.querySelector('[role="dialog"]'));
+      if(!focusable.length){
+        e.preventDefault();
+        return;
+      }
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if(e.shiftKey && (document.activeElement === first || !activeModal.contains(document.activeElement))){
+        e.preventDefault();
+        last.focus();
+      } else if(!e.shiftKey && (document.activeElement === last || !activeModal.contains(document.activeElement))){
+        e.preventDefault();
+        first.focus();
+      }
     }
   });
 
@@ -970,6 +1051,7 @@
   var realTitle = document.title;
   document.addEventListener('visibilitychange', function(){
     document.title = document.hidden ? "come back... 👀" : realTitle;
+    syncMotion();
   });
 
   // pixel mascot speech bubble
@@ -986,6 +1068,20 @@
   ];
   var mascotWrap = document.getElementById('mascotWrap');
   var mascotBubble = document.getElementById('mascotBubble');
+  var musicShelf = document.getElementById('musicShelf');
+  var musicVisible = true;
+  function syncMotion(){
+    if(musicShelf) musicShelf.classList.toggle('music-paused', document.hidden || !musicVisible);
+    if(mascotWrap) mascotWrap.classList.toggle('motion-paused', document.hidden);
+  }
+  if('IntersectionObserver' in window && musicShelf){
+    var musicObserver = new IntersectionObserver(function(entries){
+      musicVisible = entries[0].isIntersecting;
+      syncMotion();
+    }, {threshold:0.05});
+    musicObserver.observe(musicShelf);
+  }
+  syncMotion();
   var bubbleTimer;
   var mascotTaps = [];
   function mascotSay(text){
@@ -1055,15 +1151,24 @@
 
   // contact details
   var telHref = 'tel:' + CONTACT.phone.replace(/[^\d+]/g, '');
-  document.querySelectorAll('[data-contact-text]').forEach(function(el){
-    el.textContent = CONTACT[el.getAttribute('data-contact-text')];
-  });
   document.querySelectorAll('[data-contact-link]').forEach(function(el){
-    el.href = el.getAttribute('data-contact-link') === 'email' ? 'mailto:' + CONTACT.email : telHref;
+    var type = el.getAttribute('data-contact-link');
+    var value = CONTACT[type];
+    el.querySelector('strong').textContent = value;
+  });
+  document.querySelectorAll('[data-reveal-contact]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var type = btn.getAttribute('data-reveal-contact');
+      var link = document.querySelector('[data-contact-link="' + type + '"]');
+      link.href = type === 'email' ? 'mailto:' + CONTACT.email : telHref;
+      link.hidden = false;
+      document.querySelector('[data-copy="' + type + '"]').hidden = false;
+      btn.hidden = true;
+    });
   });
   document.querySelectorAll('[data-copy]').forEach(function(btn){
     btn.addEventListener('click', function(){
-      var value = CONTACT[btn.getAttribute('data-copy')];
+      var value = btn.getAttribute('data-copy') === 'email' ? CONTACT.email : CONTACT.phone;
       function done(){
         btn.textContent = 'COPIED!';
         var r = btn.getBoundingClientRect();
@@ -1125,7 +1230,7 @@
       })
       .then(function(){
         sendBtn.disabled = false;
-        sendBtn.textContent = 'SEND IT! ✉';
+        sendBtn.innerHTML = 'SEND IT! <span aria-hidden="true">✉</span>';
       });
   });
 
