@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; media-src 'self'; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'">
+  <title>Sculpt: private progress photos for Android</title>
+  <meta name="description" content="Sculpt is a free, open source Android app for tracking your physique with progress photos. Line up with a guide, compare any two dates, and keep every photo on your phone.">
+  <meta name="theme-color" content="#0f0e0e">
+  <link rel="canonical" href="https://arnav-deoghare.github.io/sculpt/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sculpt: private progress photos for Android">
+  <meta property="og:description" content="Same pose every time. Compare any two dates. Everything stays on your phone. Free and open source.">
+  <meta property="og:url" content="https://arnav-deoghare.github.io/sculpt/">
+  <meta property="og:image" content="https://arnav-deoghare.github.io/sculpt/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="top">
+    <a class="brand" href="#top" aria-label="Sculpt home">
+      <img src="favicon.svg" alt="" width="36" height="36">
+      <span>Sculpt</span>
+    </a>
+    <nav aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#download">Download</a>
+      <a href="https://github.com/Arnav-Deoghare/Sculpt">GitHub</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-text">
+        <p class="eyebrow">Free &middot; Open source &middot; Android</p>
+        <h1>Progress photos, the same pose every time.</h1>
+        <p class="lead">Sculpt is a private photo logbook for tracking your physique. Line up with a guide, compare any two dates, and keep every photo on your phone.</p>
+        <div class="actions">
+          <a class="btn primary" href="https://github.com/Arnav-Deoghare/Sculpt/releases/latest">Download the APK</a>
+          <a class="btn" href="https://github.com/Arnav-Deoghare/Sculpt">View on GitHub</a>
+        </div>
+        <p class="fine">Android 8.0 or newer &middot; Apache-2.0 license &middot; No account needed</p>
+      </div>
+
+      <div class="hero-demo">
+        <div class="phone">
+          <video id="demo" autoplay muted loop playsinline preload="metadata" poster="assets/poster.jpg" aria-label="A short animated demo of Sculpt: lining up with the guide, taking a photo, and comparing two dates.">
+            <source src="assets/sculpt-demo.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </section>
+
+    <div class="tiles" aria-hidden="true"></div>
+
+    <section id="features" class="section">
+      <h2>Made for consistent photos</h2>
+      <p class="section-lead">Progress is hard to see when every photo is framed differently. Sculpt helps you take them the same way each time, then puts any two side by side.</p>
+
+      <div class="cards">
+        <article class="card">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="10" r="5"/><path d="M14 20h20l-2 12h-4v12h-8V32h-4z"/></svg>
+          <h3>A guide for every pose</h3>
+          <p>Frame lines, or a faint body outline that matches the pose: relaxed, bicep, side, or back flexed. It only shows on screen, never in your photo.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="10" width="24" height="30" rx="4"/><rect x="18" y="8" width="24" height="30" rx="4" class="ghost"/></svg>
+          <h3>A ghost of your last photo</h3>
+          <p>Your previous shot of the same pose floats over the live camera, so you can match your position and distance.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="8" width="36" height="8" rx="3"/><rect x="6" y="20" width="36" height="8" rx="3"/><rect x="6" y="32" width="36" height="8" rx="3"/></svg>
+          <h3>Your poses, your order</h3>
+          <p>Front, front bicep, side, back and back flexed to start. Turn them on or off, rename them, drag them into order, or add your own.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="9" width="17" height="30" rx="3"/><rect x="26" y="9" width="17" height="30" rx="3" class="ghost"/></svg>
+          <h3>Compare any two dates</h3>
+          <p>Open your oldest and newest photo of a pose in one tap, or pick any two. View them side by side, or fade one over the other. Pinch to zoom both at once.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="26" r="15"/><path d="M24 26V16M24 26l8 4M18 6h12"/></svg>
+          <h3>Timer and hands-free</h3>
+          <p>Set a countdown and put the phone down. Hands-free mode shoots every remaining pose in turn from a single tap.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 7a17 17 0 0 1 0 34z" class="fill"/></svg>
+          <h3>Dark and light</h3>
+          <p>A theme inspired by interlocking gym-mat tiles, in maroon and black, with a light version for bright rooms.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="how" class="section alt">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li>
+          <span class="num">1</span>
+          <h3>Pick a pose</h3>
+          <p>Choose from the pose wheel. The guide and the ghost of your last photo switch with it.</p>
+        </li>
+        <li>
+          <span class="num">2</span>
+          <h3>Line up and shoot</h3>
+          <p>Match the outline, tap the shutter, and watch your day's progress fill up.</p>
+        </li>
+        <li>
+          <span class="num">3</span>
+          <h3>Compare over time</h3>
+          <p>Open Gallery, tap Compare, and see how far you've come, pose by pose.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="privacy" class="section">
+      <h2>Your photos never leave your phone</h2>
+      <p class="section-lead">These are photos of your body, so Sculpt is built so that nobody else can see them, not even us.</p>
+      <ul class="checks">
+        <li><strong>One permission: the camera.</strong> The app has no internet permission, so it cannot send anything anywhere.</li>
+        <li><strong>No accounts, ads or analytics.</strong> There is nothing to sign up for and nothing tracking you.</li>
+        <li><strong>Private storage.</strong> Photos don't appear in your gallery or in other apps, and Android backups of the app are switched off.</li>
+        <li><strong>Open source.</strong> Don't take our word for it. The <a href="https://github.com/Arnav-Deoghare/Sculpt">code is public</a>, and you can build the app yourself.</li>
+      </ul>
+      <p class="note">One thing to know: because nothing is uploaded, nothing is backed up either. If you uninstall the app or lose your phone, the photos go with it. An export and restore option is planned.</p>
+    </section>
+
+    <section id="download" class="section alt">
+      <h2>Download</h2>
+      <p class="section-lead">Sculpt isn't on the Play Store. You install the APK straight from GitHub.</p>
+
+      <div class="download">
+        <ol class="install">
+          <li>Open the <a href="https://github.com/Arnav-Deoghare/Sculpt/releases/latest">latest release</a> on your phone and download <code>Sculpt-&lt;version&gt;.apk</code>.</li>
+          <li>Tap the file. Android will ask you to allow installs from your browser, because the app isn't from the Play Store.</li>
+          <li>Open Sculpt and allow the camera.</li>
+        </ol>
+        <a class="btn primary big" href="https://github.com/Arnav-Deoghare/Sculpt/releases/latest">Get the latest APK</a>
+      </div>
+
+      <details class="verify">
+        <summary>Check your download is genuine</summary>
+        <p>Every release comes with a <code>.sha256</code> file. On a computer, run <code>shasum -a 256 Sculpt-&lt;version&gt;.apk</code> and compare the result. Releases are also signed with one key. Its certificate fingerprint is:</p>
+        <pre><code>SHA-256  C7:C3:AB:62:50:DE:5E:1F:19:7B:EA:35:FC:73:42:07:
+         EC:BF:A9:DC:0F:04:BE:CA:BB:94:6A:FA:3F:BD:B4:40</code></pre>
+        <p>Check it with <code>apksigner verify --print-certs Sculpt-&lt;version&gt;.apk</code>. If it doesn't match, don't install the file.</p>
+      </details>
+    </section>
+
+    <section id="open-source" class="section">
+      <h2>Free and open source</h2>
+      <p class="section-lead">Sculpt is licensed under Apache-2.0 and built in the open. Bug reports, ideas and pull requests are welcome.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/Arnav-Deoghare/Sculpt">Star it on GitHub</a>
+        <a class="btn" href="https://github.com/Arnav-Deoghare/Sculpt/blob/main/docs/CONTRIBUTING.md">How to contribute</a>
+        <a class="btn" href="https://github.com/Arnav-Deoghare/Sculpt/issues">Report a bug</a>
+      </div>
+      <h3 class="small-h">On the roadmap</h3>
+      <ul class="roadmap">
+        <li>Auto-capture when the live view matches an old photo</li>
+        <li>Align photos of the same pose for cleaner comparisons</li>
+        <li>Weight and body measurements</li>
+        <li>Reminder notifications</li>
+        <li>Encrypted backup and restore</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div>
+      <img src="favicon.svg" alt="" width="28" height="28">
+      <span>Sculpt</span>
+    </div>
+    <p>Free and open source under the <a href="https://github.com/Arnav-Deoghare/Sculpt/blob/main/LICENSE">Apache License 2.0</a>. This site sets no cookies and loads nothing from other websites.</p>
+    <p><a href="https://github.com/Arnav-Deoghare/Sculpt">GitHub</a> &middot; <a href="https://github.com/Arnav-Deoghare/Sculpt/releases">Releases</a> &middot; <a href="https://github.com/Arnav-Deoghare/Sculpt/blob/main/docs/CHANGELOG.md">Changelog</a> &middot; <a href="https://github.com/Arnav-Deoghare/Sculpt/blob/main/docs/SECURITY.md">Security</a></p>
+  </footer>
+</body>
+</html>
