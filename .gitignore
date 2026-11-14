@@ -1,0 +1,20 @@
+# Never store app builds in this repo. The Sculpt page downloads its APK from GitHub Releases.
+*.apk
+*.aab
+
+# Dependencies and logs
+node_modules/
+*.log
+
+# Secrets
+.env
+.env.*
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

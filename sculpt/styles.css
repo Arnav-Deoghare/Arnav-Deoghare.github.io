@@ -86,7 +86,6 @@ code { background: var(--panel); border: 1px solid var(--line); border-radius: 6
 .btn:hover { border-color: var(--muted); }
 .btn.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
 .btn.primary:hover { filter: brightness(1.1); }
-.btn.big { padding: 16px 30px; font-size: 1.1rem; }
 
 /* phone */
 .hero-demo { display: flex; justify-content: center; }
@@ -137,7 +136,20 @@ code { background: var(--panel); border: 1px solid var(--line); border-radius: 6
 }
 .note { margin-top: 28px; padding: 16px 20px; border-left: 4px solid var(--accent); background: var(--panel); border-radius: 0 12px 12px 0; color: var(--muted); max-width: 46em; }
 
-.download { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center; }
+.download { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
+.dl-card { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 26px; }
+.dl-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.dl-id { display: flex; align-items: center; gap: 12px; }
+.dl-id img { border-radius: 12px; }
+.dl-name { font-weight: 800; font-size: 1.1rem; }
+.dl-sub { color: var(--muted); font-size: 0.85rem; }
+.chip { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; color: var(--maroon-text); background: var(--maroon); border-radius: 8px; padding: 5px 12px; }
+.dl-meta { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--line); padding: 14px 0; margin-bottom: 20px; text-align: center; }
+.dl-meta div + div { border-left: 1px solid var(--line); }
+.dl-meta strong { display: block; font-size: 0.95rem; }
+.dl-meta span { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.dl-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 15px; }
+.dl-note { margin-top: 14px; color: var(--muted); font-size: 0.82rem; line-height: 1.6; text-align: center; }
 .install { margin: 0; padding-left: 22px; display: grid; gap: 10px; }
 .verify { margin-top: 36px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px 22px; }
 .verify summary { cursor: pointer; font-weight: 700; }
